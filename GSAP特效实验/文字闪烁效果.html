@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Swing Drop Flicker</title>
+  <style type="text/css">
+  	body{
+  font-family: Arial, Helvetica, sans-serif;
+  color:black;
+  background:black;
+  border-top:solid 4px #91e600;
+  margin:0;
+  color:white;
+  padding:100px 50px;
+  font-size:80px;
+  text-align:center;
+ 
+}
+
+
+#compatibility {
+   visibility:hidden;
+}
+  </style>
+</head>
+
+<body>
+<div id="scene">
+  <div id="compatibility">Swing Drop Flicker</div>
+	
+</div>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var tl = new TimelineMax({repeat:-1}),//无限循环播放
+  text = $("#compatibility"),
+  split = new SplitText(text, {type:"chars", position:"absolute"}),
+  rough = RoughEase.ease.config({strength:2, clamp:true}),
+  i;
+  //在这里找到Ease效果工具    https://greensock.com/ease-visualizer
+  //template(模板;样板),strength(力量),points(点),taper(逐渐变细),randomize(使随机化),clamp(夹紧;堆高)
+  
+  //常用的属性template如(template:  Power0.easeNone)用于设定大致的变化趋向
+  //strength，如(strength: 1)用于设置趋向随机变化的幅度大致区间
+  //points，如(points: 50)用于设置趋向中，幅度变化次数
+  //taper，如(taper: "both")用于幅度变化的模式
+  //randomize，如(randomize: true)用于设定幅度是否为随机大小
+  //clamp，如(clamp: false)用于设置变化值是否为负
+
+tl.set(text, {autoAlpha:1})
+for (i = 0; i < split.chars.length; i++) {//遍历每个字母，一共16个
+  tl.to(split.chars[i], 0.6, {autoAlpha:0, ease:rough}, 1.5 + Math.random());//1.5代表第一个字母的闪烁必在1.5s后
+}
+</script>
+</body>
+</html>

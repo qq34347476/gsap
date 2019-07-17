@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP - SVG Path Range Slider #2</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Oswald'>
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+     <style type="text/css">
+     	body{
+  background-color: #222;
+  text-align: center;
+  overflow:hidden;
+}
+
+svg{
+position:absolute; left:50%; top:50%; -webkit-transform:translate(-50%,-50%); transform:translate(-50%,-50%);
+}
+
+
+     </style>
+</head>
+
+<body>
+
+<svg width="320px" height="150px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<path id="path1" d="M10 80 Q 150 0 300 80" stroke="gray" stroke-dasharray="5,5" fill="transparent"/>
+<path id="path2" d="M10 80 Q 150 0 300 80" stroke-width="7" stroke="#7CFC00" fill="transparent" stroke-linecap="round"/>
+<circle class="knob" r="25" fill="#88CE02" stroke-width="4" stroke="#111"/>
+</svg>
+
+
+
+
+
+
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/DrawSVGPlugin.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+
+   <script type="text/javascript">
+   	/*
+a Pen by DIACO : http://codepen.io/MAW
+powered by GSAP : http://www.greensock.com/
+*/
+
+var D = document.createElement('div');
+TweenMax.set('svg',{overflow:"visible"})
+TweenMax.set('.knob',{x:10,y:80})
+
+var tl = new TimelineMax({paused:true})
+.from("#path2",1,{drawSVG:"0%",stroke:'orange',ease:Linear.easeNone})
+.to('.knob',1,{bezier:{type:"quadratic",values:[{x:10,y:80},{x:150,y:0},{x:300,y:80}]},ease:Linear.easeNone},0);
+
+Draggable.create(D,{trigger:".knob",
+type:'x',
+throwProps:true,
+bounds:{minX:0,maxX:300},
+onDrag:Update,
+onThrowUpdate:Update});   
+function Update(){tl.progress(Math.abs(this.x/300))};
+
+TweenMax.to('#path1',0.5,{strokeDashoffset:-10,repeat:-1,ease:Linear.easeNone})
+
+// a Pen by DIACO : twitter.com/Diaco_ml || codepen.io/MAW
+   </script>
+</body>
+</html>

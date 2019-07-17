@@ -1,0 +1,47 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				//获取表单的数据，然后生成json对象，将对象传入GSAP语句完成样式生成
+
+				var inputInfoSheet = {}//
+
+				function getInfo() {
+					for(var i = 0; i < $('input').size(); i++) {
+						var $this = $('input').eq(i)
+						var id = $this.attr('id')
+						var value = $this.val()
+						inputInfoSheet[id] = value
+					}
+					console.log(inputInfoSheet);
+				}
+
+				$('input').change(function() {
+					getInfo()
+					if(inputInfoSheet.css != null) {
+						delete inputInfoSheet['css']
+					}
+					TweenMax.to('.box', 0.6, inputInfoSheet)
+				})
+
+			})
+		</script>
+	</head>
+
+	<body>
+		width<input type="" name="width" id="width" value="" /><br /> height
+		<input type="" name="height" id="height" value="" /><br /> background-color
+		<input type="" name="background-color" id="backgroundColor" value="" /><br />
+		<div class="box">
+
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var $container = $('.container')
+				,$img = $('img')
+				
+				$img.mousemove(function(e){
+					var posX = (e.pageX - $(this).offset().left) / $img.width() * 100 - 50
+					var posY = -(e.pageY - $(this).offset().top) / $img.height() * 100 + 50
+					console.log(e.pageX);
+					
+					TweenMax.set(this,{transformPespective:500,transformStyle:'preserve-3d',transformOrigin:'center center'})
+					TweenMax.to(this,0.6,{rotationX : posY * 0.3, rotationY : posX * 0.3,rotationZ: '-0.6',y:-60,boxShadow:' 0px 20px 40px #A4837E'})
+				}).mouseleave(function(){
+					TweenMax.to(this,0.6,{y:0,boxShadow:''})
+					TweenMax.to(this,0.6,{rotationX :0, rotationY : 0,rotationZ: 0})
+					
+				})
+			})
+		</script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			.container{width: 100%;height: 100vh;background: rgb(242,216,211);position: relative;overflow: hidden;padding:10% 20%;}
+			img{width: 30vh;height: 30vh;border-radius: 4px;display: block;margin: auto;float: left;margin: 100px 10px;}
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			<img src="../img/专辑img.jpg"/>
+			<img src="../img/专辑img1.jpg"/>
+			<img src="../img/专辑img2.jpg"/>
+			<!--<img src="../img/tyler-movi.jpg"/>-->
+		</div>
+	</body>
+
+</html>

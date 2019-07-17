@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()//建立总时间轴
+				function tl1(){
+					var tl1 = new TimelineLite()//建立子时间轴1
+					tl1.to('img',1,{x:100})
+					return tl1//将子时间轴返回给总时间轴，使得时间轴内的动画按一定顺序排列
+				}
+				function tl2(){
+					var tl2 = new TimelineLite()//建立子时间轴2
+					tl2.to('img',1,{y:100})
+					return tl2
+				}
+				function tl3(){
+					var tl3 = new TimelineLite()//建立子时间轴3
+					tl3.to('img',1,{x:200})
+					return tl3
+				}
+				//按照时间轴传递的顺序，子时间轴依次排列，子时间轴内的动画将相对于子时间轴偏移，
+				//若tl1执行1s，那么tl2将在1s末执行，同时tl2内的动画将以1s作为起点运行
+				tl.add(tl1())
+				  .add(tl2())
+				  .add(tl3())
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="width: 100px;position: relative;"/>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()//使用时需要先实例化对象
+				
+				//然后实体tl将成为时间轴，做一系列同步运行操作，不是异步(之前用TweenMax都是用delay来实现)
+				tl.to('#img1',1,{x:100})
+				  .to('#img1',1,{y:100})
+				  .add('delay','+=1')//相当于把'+=1'作为字符串存入delay变量中(如果把'+=1'换为'1'则动画在总时间的1s时开始执行)
+				  .to('#img2',1,{x:100},'delay')//然后跟变量的使用方法一样，这个动画会延迟一秒
+				  
+				 $(window).click(function(){
+				 	tl.restart()
+				 })
+			})
+		</script>
+	</head>
+	<body>
+		<img id="img1" src="../img/timelinelite.png" style="position: relative;"/>
+		<img id="img2" src="../img/logo-onboard-video.svg" style="position: relative;width: 100px;"/>
+	</body>
+</html>

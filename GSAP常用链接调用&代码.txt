@@ -1,0 +1,14 @@
+
+
+
+
+
+
+
+
+TweenMax.js ->
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+CSSPlugin.js ->
+<script src="../js/CSSPlugin.js" type="text/javascript" charset="utf-8"></script>
+EasePack.js ->
+<script src="../js/EasePack.js" type="text/javascript" charset="utf-8"></script>

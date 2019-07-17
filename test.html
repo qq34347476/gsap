@@ -1,0 +1,66 @@
+<html>
+<!--http://blog.csdn.net/xuewuzhijing10/article/details/8766349-->
+<!--http://www.runoob.com/js/js-regexp.html-->
+	<head>
+		<meta charset="UTF-8" />
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			.grid {
+				display: grid;
+				grid-template-columns: 300px 1fr 2fr;
+				grid-template-rows: 100px 500px 1fr;
+			}
+			
+			.box {
+				border: 1px solid white;
+				background: coral;
+			}
+		</style>
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var s = $('style').html()
+				console.log(s);
+
+//				var obj = "new1abcdefg".replace(/(.)(?=[^$])/g, "$1,").split(","); //字符串转化为数组
+//
+//				var obj2 = "new2abcdefg".split(""); //字符串转化为数组
+//				alert(obj);
+//				alert(obj.length);
+//				alert(obj instanceof Array);
+//				alert(obj.join("")); //数组转化为字符串
+
+				var t = 'wedasfawddwe AB wqex x13214 我'
+				var x = t.match(/[dwe]/g)//匹配字母
+				var x = t.match(/we/g)//匹配词组
+				var x = t.match(/we|dd/g)//匹配|分开的词组部分
+				var x = t.match(/x/g)//匹配词组末尾部分
+				var x = t.match(/\d/g)//匹配数字
+				var x = t.match(/\s/g)//匹配空白字符
+				var x = t.match(/\u0041\u0042/g)//匹配16进制字符
+				
+				
+//				console.log(x.join(''));//将数组转为字符串
+				console.log(x);
+				
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="grid">
+			<div class="box">1</div>
+			<div class="box">2</div>
+			<div class="box">3</div>
+			<div class="box">4</div>
+			<div class="box">5</div>
+			<div class="box">6</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			div {
+				width: 100px;
+				height: 100px;
+				background: coral;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				function saymyName(name = 'walter', lastName = 'white') {
+					console.log("your name is " + name + " " + lastName);
+				}
+
+				saymyName('peter', 'pan');
+				// "your name is peter pan"
+				saymyName();
+				// "your name is walter white"
+				Draggable.create(".a", {
+					type: "rotation",
+					throwProps: true,
+					onDrag: function(e) {
+						//checks if at least 20 pixels are overlapping:
+						if(this.hitTest(".b", 20)) {
+							console.log("b!!!");
+						}
+						//checks if at least 50% of the surface area of either element is overlapping:
+						if(this.hitTest(".c", "50%")) {
+							console.log("c!!!");
+
+						}
+					}
+				});
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="a">a</div>
+		<div class="b">b</div>
+		<div class="c">c</div>
+	</body>
+
+</html>

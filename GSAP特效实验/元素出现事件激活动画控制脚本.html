@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ModifiersPlugin-latest-beta.js" type="text/javascript" charset="utf-8"></script>
+
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			body {
+				overflow: hidden;
+			}
+			
+			.container {
+				width: 100vh;
+				background: #bbb;
+				position: relative;
+			}
+			
+			.box {
+				width: 100vh;
+				height: auto;
+				position: relative;
+				top: 0;
+				left: 0;
+				background: coral;
+			}
+			
+			.scroll {
+				width: 10px;
+				height: 50px;
+				position: absolute;
+				right: 0;
+				top: 0;
+				background: whitesmoke;
+				z-index: 999;
+			}
+			
+			[class^='content'] {
+				width: 800px;
+				height: 1000px;
+				margin: auto;
+				font-size: 300px;
+				color: white;
+				text-align: center;
+				position: relative;
+			}
+			img{position: absolute;top: 0;left: 0;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var $scroll = $('.scroll'),
+					$window = $(window),
+					$content = $('.content'),
+					$container = $('.container'),
+					$box = $('.box'),
+					$bound = $('.bound'),
+					windowHeight = $window.outerHeight(),
+					ctHeight = $content.outerHeight(),
+					boxHeight = $box.outerHeight(),
+					ctNum = $content.size(),
+					boundHeight = 0
+					//视图高度占所有内容高度的比值  * 一个内容区域的高度
+					,
+					scrollHeight = Math.pow($window.outerHeight(), 2) / boxHeight,
+					period = 0,
+					visibleBound = 0
+					
+
+				//预定义滚动条，边界，内容盒子的位置或尺寸
+				TweenMax.set($scroll, {
+					height: scrollHeight
+				})
+				TweenMax.set($bound, {
+					height: boxHeight * 2 - windowHeight,
+					y: -(boxHeight - windowHeight)
+				})
+				TweenMax.set($box, {
+					y: boxHeight - windowHeight
+				})
+
+				boundHeight = $bound.outerHeight()
+				visibleBound = boundHeight - boxHeight
+//				console.log(visibleBound);
+				//定义元素的可拖动
+				Draggable.create($scroll, {
+					type: 'y',
+					throwProps: true,
+					bounds: {
+						minY: 0,
+						maxY: windowHeight - scrollHeight
+					},
+					liveSnap: function(endValue) {
+						var progress = endValue > 0 ? endValue / (windowHeight - scrollHeight) : 0
+//						console.log(progress);
+						TweenMax.to($box, 0, {
+							y: (1 - progress) * visibleBound
+						})
+						onPageShow()
+						
+						return endValue
+					}
+				})
+				Draggable.create($box, {
+					type: 'y',
+					throwProps: true,
+					bounds: $bound,
+					liveSnap: function(endValue) {
+
+						var period = (visibleBound - endValue) / visibleBound
+						TweenMax.to($scroll, 0.6, {
+							y: (windowHeight - scrollHeight) * period
+						})
+						onPageShow()
+
+						return endValue
+					}
+				})
+				document.addEventListener("mousewheel", GO);
+
+				function GO(e) {
+					var SD = isNaN(e) ? e.wheelDelta || -e.detail : e;
+					
+					if(SD < 0) {
+						TweenMax.to($box, 0.2, {
+							y: '-=100',
+							modifiers: {
+								y: function(value) {
+
+									return value < 0 ? 0 : value
+								}
+
+							},
+							onUpdate: function() {
+								onPageShow()
+								
+								boxTop = $box.offset().top
+								TweenMax.to($scroll, 0, {
+									y: -boxTop / (visibleBound) * (windowHeight - scrollHeight)
+								})
+
+							}
+						})
+					} else {
+						TweenMax.to($box, 0.2, {
+							y: '+=100',
+							modifiers: {
+								y: function(value) {
+
+									return value > visibleBound ? visibleBound : value
+								}
+
+							},
+							onUpdate: function() {
+								onPageShow()	
+								
+								boxTop = $box.offset().top
+
+								TweenMax.to($scroll, 0, {
+									y: -boxTop / (visibleBound) * (windowHeight - scrollHeight)
+								})
+
+							}
+						})
+
+					}
+				}
+			
+				//以下为动画控制脚本
+				var oldSelector
+				,showWhichPage
+				,showOffset = 200
+				
+				//用于监测.box中所有.content(子部分)在网页可视区域(window)是否出现
+				//根据判断出的.content获得选择器,以及for语句在此事件激活时的i值，即content的编号(1~6)
+				//然后调用selectPackage函数来选择控制每个.content中元素动画的动画脚本包(绑定在.content元素上的函数)
+				function onPageShow(){
+					for (var i = 2;i<=6;i++) {//遍历所选定的.content
+					var $content = $('.content'+i)
+					showWhichPage = $content.selector//获取选择器
+					
+					//当某个.content相对于window顶部距离小于window的高度(.content进入视野)，
+					//且.content顶部在视野内(否则当content3进入视野时content2和content1依然响应)，
+					//且新获取的选择器不等于旧的(防止进入视野的content重复激活，导致动画预定义重复设置)
+					//showOffset为显示的偏移量,为了满足.content进入视野后，需要继续运动一段距离才做动画
+					
+					if(($content.offset().top + showOffset <= windowHeight) && ($content.offset().top >= 0) && (showWhichPage != oldSelector)){
+						oldSelector = showWhichPage//满足content进入window事件时,此选择器变为旧选择器
+						selectPackage(i,showWhichPage)//调用动画包选择函数
+					}
+				}
+				}
+			
+			function selectPackage(index,p){//调用绑定于content的动画包
+				$('[class^="content"]')[index-1].animation()
+			}
+//	以下被注释的代码控制第一个.content内的元素的动画，但是由于第一个.content通常不通过滚动条的位置驱动，
+//所以不用以下方法编写，应该使用TweenMax等简单的方式完成
+
+//			$('.content')[0].animation=function(){
+//				TweenMax.to('.img1',1,{x:300})
+//			}
+
+TweenMax.to('.content1 .img1',1,{x:200,scale:2,y:200})
+
+//以下为第2个到第6个.content内元素的动画控制脚本(动画脚本控制包)
+			$('.content2')[0].animation=function(){
+				TweenMax.to('.img2',1,{x:300})
+			}
+			$('.content3')[0].animation=function(){
+				TweenMax.to('.img3',1,{x:300})
+			}
+			$('.content4')[0].animation=function(){
+				TweenMax.to('.img4',1,{x:300})
+			}
+			$('.content5')[0].animation=function(){
+				TweenMax.to('.img5',1,{x:300})
+			}
+			$('.content6')[0].animation=function(){
+				TweenMax.to('.img6',1,{x:300})
+			}
+
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="scroll"></div>
+			<div class="bound">
+				<div class="box">
+					<div class="content1" style="background: lightcoral;">
+						<img src="../img/logo.png" class="img1"/>
+					</div>
+					<div class="content2" style="background: #29363B;">
+						<img src="../img/logo.png" class="img2"/>
+					</div>
+					<div class="content3" style="position: relative;background: #EA495F;margin: auto;padding-top: 500px;font-size: 50px;">
+						<img src="../img/logo.png" class="img3"/>
+					</div>
+					<div class="content4" style="background: #F4837D;">
+						<img src="../img/logo.png" class="img4"/>
+						
+					</div>
+					<div class="content5" style="background: #FDCEA9;">
+						<img src="../img/logo.png" class="img5"/>
+						
+					</div>
+					<div class="content6" style="background: #99B998;">
+						<img src="../img/logo.png" class="img6"/>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

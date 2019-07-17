@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			div{width: 100px;height: 100px;margin: 10px;}
+		</style>
+	</head>
+	<body>
+		<div class="a" style="background: red;"></div>
+		<div class="b" style="background: yellow;"></div>
+		<div class="c" style="background: coral;"></div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.to(['.a','.b','.c'],2,{width:200})//通过数组的方式选择多个元素
+			})
+		</script>
+	</body>
+</html>

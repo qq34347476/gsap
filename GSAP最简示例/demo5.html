@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="width: 100px;top: 140px;position: absolute;" class="man"/>
+		<div id="updateOutput"></div>
+		<div id="completeOutput"></div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var updateOutput = document.getElementById("updateOutput"),
+			        completeOutput = document.getElementById("completeOutput"),
+			        updateCount = 0;
+				TweenMax.to('.man',1,{left:100,onUpdate:updateHandler, onComplete:completeHandler,onCompleteParams:["动画完成!"]})
+				function updateHandler(){
+					updateCount++;
+       			 	updateOutput.innerHTML = "更新: " + updateCount;
+				}
+				function completeHandler(message) {
+       			 completeOutput.innerHTML = "更新完成 <br/> 完成参数: " + message;
+   				 }
+				/*
+				 您可以定义onStart，onUpdate，onComplete，onReverse和/或onReverseComplete事件回调。
+				 所有这些（可选）接受一个参数数组，如上面的onCompleteParams属性所示。
+				 */
+			})
+		</script>
+	</body>
+</html>

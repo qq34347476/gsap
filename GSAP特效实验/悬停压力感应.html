@@ -1,0 +1,47 @@
+<html>
+
+	<head>
+		<meta charset="UTF-8" />
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			.container{width: 100%;height: 100%;position: relative;overflow: hidden;}
+			.container img{width: 150%;display: block;opacity: 0.45;margin: auto;position: absolute;top: -25%;left: -25%;right: -25%;bottom: -25%;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var $container = $('.container')
+				,$img1 = $('.img1')
+				,$img2 = $('.img2')
+				,$img3 = $('.img3')
+				
+				TweenMax.set('.container img',{transformStyle: 'preserve-3d', transformPerspective:500, transformOrigin:'center center'})
+				
+				$container.mousemove(function(e){
+//					鼠标距离页面左边的距离 / 图片容器的宽度 = 鼠标距离图片左侧距离值占图片总宽度的百分比
+//					我们需要以此百分比为基础 - 50(或 + 50) 从而得到 鼠标距离图片中心的百分比
+					var sxPos = e.pageX / $container.width() * 100 - 50
+					,syPos = -e.pageY / $container.height() * 100 + 50
+					console.log(syPos);
+					TweenMax.to($img1,1,{rotationY:0.02* sxPos,rotationX:0.2 * syPos, rotationZ: '-0.1'})
+					TweenMax.to($img2,1,{rotationY:0.04 * sxPos,rotationX:0.15 * syPos, rotationZ: 0})
+					TweenMax.to($img3,1,{rotationY:0.06 * sxPos,rotationX:0.1 * syPos, rotationZ: 0.1})
+				})
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<img src="../img/tyler-movi.jpg" class="img1"/>
+			<img src="../img/tyler-movi.jpg" class="img2"/>
+			<img src="../img/tyler-movi.jpg" class="img3"/>
+		</div>
+	</body>
+
+</html>

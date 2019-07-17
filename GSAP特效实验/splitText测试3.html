@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				,$text = $('.text')
+				,splitText = new SplitText($text)
+				
+				tl.set($text,{perspective:400})//设置perspective(透镜)
+				
+				function kill(){
+					tl.clear().time(0)
+					splitText.revert()
+				}
+				//这里有配色方案    http://www.shui-mai.com/other/popularcolor/
+				var randomScale,randomX,randomY,randomRotation,colors = ['#556270','#4ECDC4','#C7F464','#FF6B6B','#C44D58']
+				
+				var t = setInterval(function(){//setInterval函数每隔1000毫秒(1s)就运行一次里面的函数
+					kill()
+					splitText.split({type:'chars'})
+					$(splitText.chars).each(function(index,el){
+						randomScale = Math.random()*3
+						if(randomScale < 0.5){	//如果生成的字体尺寸太小，就在此基础上加一个值以增大尺寸
+							console.log(randomScale);
+							randomScale+=1
+						}
+						//获取随机值来定义属性
+						randomX = Math.random()*150
+						randomY = Math.random()*150
+						color = colors[(Math.random() * colors.length) | 0]//获取颜色集内的随机一个颜色用" |0 "来得到整数 
+						console.log(color);
+						//使用TweenMax而不是tl可以让每个字符不依次运行
+						TweenMax.to($(el),0.3,{x:randomX,y:randomY,color:color,ease: Bounce.easeOut,scale:randomScale})
+					})	
+				},1000)
+			})
+		</script>
+		<style type="text/css">
+			.text{width:300px;height: 200px;margin: auto;font-size: 50px;color: white;text-align: center;margin-top: 200px;}
+		</style>
+	</head>
+	<body>
+		<div class="text">
+			EXPLODE
+		</div>
+	</body>
+</html>

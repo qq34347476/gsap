@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/Physic2DPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var ball = '.ball'
+//				TweenLite.to(ball, 2, {physics2D:{velocity:300, angle:-180, gravity:4000}});
+				TweenMax.to(ball,2,{physics2D:{velocity:300,angle:-60,gravity:400}})
+//				TweenLite.to(ball, 2, {physics2D:{velocity:300, angle:-60, friction:0.1}}); 
+//				TweenLite.to(ball, 2, {physics2D:{velocity:300, angle:-60, acceleration:50, accelerationAngle:180}}); 
+			
+				//基于速度，角度，重力，加速度，加速度和/或摩擦的组合，提供用于补偿对象的x和y坐标（或“左”和“顶”）的简单物理功能。
+				//它不是为了替代一个完整的物理引擎，不提供碰撞检测，而是作为一种轻松创建与GreenSock动画平台有趣的基于物理的效果的方式。
+				//参数不是动态可更新的，但是一个独特的便利是一切都是可逆的。所以，如果你产生一堆粒子补间，例如，并将它们投入到TimelineLite中，
+				//你可以简单地调用  reverse() 时间线来观察粒子回溯到最初的步骤。
+			})
+		</script>
+		<style type="text/css">
+			.ball{width: 50px;height: 50px;border-radius: 50%;background: coral;margin: 300px auto;}
+		</style>
+	</head>
+	<body>
+		<div class="ball">
+			
+		</div>
+	</body>
+</html>

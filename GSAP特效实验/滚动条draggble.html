@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ModifiersPlugin-latest-beta.js" type="text/javascript" charset="utf-8"></script>
+		
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			body{overflow: hidden;}
+			.container{width: 100vh;background: #bbb;position: relative;}
+			.box{width: 100vh;height: auto;position: relative;top: 0;left: 0;background: coral;}
+			.scroll{width: 10px;height: 50px;position: absolute;right: 0;top: 0;background: whitesmoke;z-index: 999;}
+			.content{width: 800px;height: 1000px;margin: auto;font-size: 300px;color: white;text-align: center;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var $scroll = $('.scroll')
+				,$window = $(window)
+				,$content = $('.content')
+				,$container = $('.container')
+				,$box = $('.box')
+				,$bound = $('.bound')
+				,windowHeight = $window.outerHeight()
+				,ctHeight = $content.outerHeight()
+				,boxHeight = $box.outerHeight()
+				,ctNum = $content.size()
+				,boundHeight = 0
+				//视图高度占所有内容高度的比值  * 一个内容区域的高度
+				,scrollHeight = Math.pow($window.outerHeight(),2) / boxHeight
+				,period = 0 	
+				,visibleBound = 0
+				,top=0
+				,tl = new TimelineMax({paused:true})
+				.to($box,1,{y:0})
+				//预定义滚动条，边界，内容盒子的位置或尺寸
+				TweenMax.set($scroll,{height:scrollHeight})
+				TweenMax.set($bound,{height:boxHeight * 2 - windowHeight,y:-(boxHeight - windowHeight)})
+				TweenMax.set($box,{y:boxHeight - windowHeight})
+					
+				
+				boundHeight = $bound.outerHeight()
+				visibleBound = boundHeight - boxHeight
+				console.log(visibleBound);
+//				console.log(boundHeight);
+				//定义元素的可拖动
+				 Draggable.create($scroll,{type:'y',throwProps:true,bounds:{minY:0, maxY:windowHeight - scrollHeight},onPress:function(value){
+					TweenMax.set($box,{y:boxHeight - windowHeight})
+					console.log(top);
+					TweenMax.to($box,0,{y:top+visibleBound})
+				 	
+				 },liveSnap:function(endValue){
+					var progress = endValue > 0 ? endValue / (windowHeight - scrollHeight) : 0
+					console.log(progress);
+					tl.progress(progress)
+					return endValue
+				 }})
+				 Draggable.create($box,{type:'y',throwProps:true,bounds:$bound,liveSnap:function(endValue){
+			
+				 	var period = (visibleBound - endValue) / visibleBound
+				 	TweenMax.to($scroll,0.6,{y:(windowHeight-scrollHeight) * period})
+//				 	console.log(endValue);
+					top = $box.offset().top
+					console.log(top);
+				 	return endValue
+				 }})
+				 document.addEventListener("mousewheel",GO);
+				 function GO(e){
+				 	var SD=isNaN(e)?e.wheelDelta||-e.detail:e;
+
+
+					if(SD<0){
+						TweenMax.to($box,1,{y:'-=200',modifiers:{
+							y:function(value){
+								console.log(value)
+								return value < 0 ? 0 :value
+							}
+							
+						},onUpdate:function(){
+							boxTop = $box.offset().top
+TweenMax.to($scroll,0,{y:-boxTop/(visibleBound)*(windowHeight-scrollHeight)})
+							
+						}})
+					}else{
+						TweenMax.to($box,1,{y:'+=200',modifiers:{
+							y:function(value){
+								console.log(value)
+								return value > visibleBound ? visibleBound :value
+							}
+							
+						},onUpdate:function(){
+							boxTop = $box.offset().top
+							
+TweenMax.to($scroll,0,{y:-boxTop/(visibleBound)*(windowHeight-scrollHeight)})
+							
+						}})
+						
+					}
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="scroll"></div>
+			<div class="bound">
+				<div class="box">
+					<div class="content">1</div>
+					<div class="content">2</div>
+					<div class="content">3</div>
+					<div class="content">4</div>
+					<div class="content">5</div>
+					<div class="content">6</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,578 @@
+<!--<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Endor Scrolling Parallax Star Wars Background</title>
+
+	</head>
+
+	<body>
+		<html>
+
+		<head>
+			<title>Endor Scrolling Parallax Demo</title>
+			<style type="text/css">
+				body {
+					background: #000;
+					margin: 0;
+					padding-top: 400px;
+					font-family: 'Oswald';
+				}
+				
+				.scene-container {
+					overflow: visible;
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+				
+				.parallax-container {
+					position: absolute;
+					overflow: visible;
+					width: 2560px;
+					height: 1440px;
+					background: #000;
+					z-index: 1;
+				}
+				
+				.parallax-layer {
+					width: 100vw;
+					height: 100vh;
+					position: fixed;
+					left: 0;
+					top: 0;
+					background-position: bottom center;
+					background-repeat: repeat-x;
+				}
+				
+				.layer-logo {
+					z-index: 15;
+					background-image: url('http://coyle.online/endor/img/endorlogo.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+					background-attachment: fixed !important;
+					background-position: center top !important;
+					-webkit-background-size: cover !important;
+					-moz-background-size: cover !important;
+					background-size: cover !important;
+				}
+				
+				.layer-1 {
+					top: 0;
+					!important;
+					z-index: 5;
+					background-image: url('http://coyle.online/endor/img/endor11.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-2 {
+					z-index: 10;
+					background-image: url('http://coyle.online/endor/img/endor10.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-3 {
+					z-index: 15;
+					background-image: url('http://coyle.online/endor/img/endor9.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-4 {
+					top: 25px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor8.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-5 {
+					top: 90px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor7.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-6 {
+					top: 30px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor6.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-7 {
+					top: 55px;
+					!important;
+					z-index: 25;
+					background-image: url('http://coyle.online/endor/img/endor5.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-8 {
+					top: 110px;
+					!important;
+					z-index: 30;
+					background-image: url('http://coyle.online/endor/img/endor4.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-9 {
+					top: 105px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor3.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-10 {
+					top: 105px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor2.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-11 {
+					top: 110px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor1.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.layer-top {
+					top: 0;
+					z-index: 30;
+					background-image: url('http://coyle.online/endor/img/endor-top.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+				}
+				
+				.content {
+					position: absolute;
+					top: 110vh;
+					background: #000000;
+					width: 100vw;
+					min-height: 110vh;
+					z-index: 1000;
+				}
+				
+				.content h1 {
+					color: #fff;
+					font-size: 2em;
+					text-transform: uppercase;
+					text-align: center;
+				}
+			</style>
+		</head>
+
+		<body>
+			<div class="scene-container">
+				<div class="parallax-container">
+					<div class="parallax-layer layer-0" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-1" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-2" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-3" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-4" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-5" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-6" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-7" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-8" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-9" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-10" data-parallax-speed="0.98" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-11" data-parallax-speed="1.0" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-top" data-parallax-speed="1.0" data-max-scroll="1400"></div>
+				</div>
+			</div>
+
+			<div class="content">
+			</div>
+
+			<script type="text/javascript">
+				var ParallaxManager, ParallaxPart;
+
+				ParallaxPart = (function() {
+					function ParallaxPart(el) {
+						this.el = el;
+						this.speed = parseFloat(this.el.getAttribute('data-parallax-speed'));
+						this.maxScroll = parseInt(this.el.getAttribute('data-max-scroll'));
+					}
+
+					ParallaxPart.prototype.update = function(scrollY) {
+						if(scrollY > this.maxScroll) {
+							return;
+						}
+						var offset = -(scrollY * this.speed);
+						this.setYTransform(offset);
+					};
+
+					ParallaxPart.prototype.setYTransform = function(val) {
+						this.el.style.webkitTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.MozTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.OTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.transform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.msTransform = "translateY(" + val + "px)";
+					};
+
+					return ParallaxPart;
+
+				})();
+
+				ParallaxManager = (function() {
+					ParallaxManager.prototype.parts = [];
+
+					function ParallaxManager(elements) {
+						console.log(typeof elements);
+						//		if(typeof elements === 'array' && elements.length) {
+						//			this.elements = elements;
+						//		}
+						//		if(typeof elements === 'object' && elements.item) {
+						//			this.elements = Array.prototype.slice.call(elements);
+						//		} else if(typeof elements === 'string') {
+						this.elements = document.querySelectorAll(elements);
+						//			if(this.elements.length === 0) {
+						//				throw new Error("Parallax: No elements found");
+						//			}
+						this.elements = Array.prototype.slice.call(this.elements);
+						//		} else {
+						//			throw new Error("Parallax: Element variable is not a querySelector string, Array, or NodeList");
+						//		}
+						for(var i in this.elements) {
+							this.parts.push(new ParallaxPart(this.elements[i]));
+						}
+						window.addEventListener("scroll", this.onScroll.bind(this));
+					}
+
+					ParallaxManager.prototype.onScroll = function() {
+						window.requestAnimationFrame(this.scrollHandler.bind(this));
+					};
+
+					ParallaxManager.prototype.scrollHandler = function() {
+						var scrollY = Math.max(window.pageYOffset, 0);
+						for(var i in this.parts) {
+							this.parts[i].update(scrollY);
+							console.log(this.parts);
+						}
+					};
+
+					return ParallaxManager;
+
+				})();
+
+				new ParallaxManager('.parallax-layer');
+			</script>
+		</body>
+
+		</html>
+
+	</body>
+
+</html>-->
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Endor Scrolling Parallax Star Wars Background</title>
+
+	</head>
+
+	<body>
+		<html>
+
+		<head>
+			<title>Endor Scrolling Parallax Demo</title>
+			<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+			<style type="text/css">
+				body {
+					background: #000;
+					margin: 0;
+					padding-top: 400px;
+					font-family: 'Oswald';
+				}
+				
+				.scene-container {
+					overflow: visible;
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+				
+				.parallax-container {
+					position: absolute;
+					overflow: visible;
+					width: 2560px;
+					height: 1440px;
+					background: #000;
+					z-index: 1;
+				}
+				
+				.parallax-layer {
+					width: 100vw;
+					height: 100vh;
+					position: fixed;
+					left: 0;
+					top: 0;
+					background-position: bottom center;
+					background-repeat: repeat-x;
+				}
+				
+				
+				
+				.layer-logo {
+					z-index: 15;
+					background-image: url('http://coyle.online/endor/img/endorlogo.png');
+					-webkit-background-size: cover;
+					-moz-background-size: cover;
+					-o-background-size: cover;
+					background-size: cover;
+					background-attachment: fixed !important;
+					background-position: center top !important;
+					-webkit-background-size: cover !important;
+					-moz-background-size: cover !important;
+					background-size: cover !important;
+				}
+				
+				.layer-1 {
+					top: 0;
+					!important;
+					z-index: 5;
+					background-image: url('http://coyle.online/endor/img/endor11.png');
+				}
+				
+				.layer-2 {
+					z-index: 10;
+					background-image: url('http://coyle.online/endor/img/endor10.png');
+				}
+				
+				.layer-3 {
+					z-index: 15;
+					background-image: url('http://coyle.online/endor/img/endor9.png');
+				}
+				
+				.layer-4 {
+					top: 25px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor8.png');
+				}
+				
+				.layer-5 {
+					top: 90px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor7.png');
+				}
+				
+				.layer-6 {
+					top: 30px;
+					!important;
+					z-index: 20;
+					background-image: url('http://coyle.online/endor/img/endor6.png');
+				}
+				
+				.layer-7 {
+					top: 55px;
+					!important;
+					z-index: 25;
+					background-image: url('http://coyle.online/endor/img/endor5.png');
+				}
+				
+				.layer-8 {
+					top: 110px;
+					!important;
+					z-index: 30;
+					background-image: url('http://coyle.online/endor/img/endor4.png');
+				}
+				
+				.layer-9 {
+					top: 105px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor3.png');
+				}
+				
+				.layer-10 {
+					top: 105px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor2.png');
+				}
+				
+				.layer-11 {
+					top: 110px;
+					!important;
+					z-index: 35;
+					background-image: url('http://coyle.online/endor/img/endor1.png');
+				}
+				
+				.layer-top {
+					top: 0;
+					z-index: 30;
+					background-image: url('http://coyle.online/endor/img/endor-top.png');
+				}
+				
+				.content {
+					position: absolute;
+					top: 110vh;
+					background: #000000;
+					width: 100vw;
+					min-height: 110vh;
+					z-index: 1000;
+				}
+				
+				.content h1 {
+					color: #fff;
+					font-size: 2em;
+					text-transform: uppercase;
+					text-align: center;
+				}
+				[class^='layer'] {
+					-webkit-background-size: cover !important;
+					-moz-background-size: cover !important;
+					-o-background-size: cover !important;
+					background-size: cover !important;
+				}
+			</style>
+		</head>
+
+		<body>
+			<div class="scene-container">
+				<div class="parallax-container">
+					<div class="parallax-layer layer-0" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-1" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-2" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-3" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-4" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-5" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-6" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-7" data-parallax-speed="0.2" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-8" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-9" data-parallax-speed="0.3" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-10" data-parallax-speed="0.98" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-11" data-parallax-speed="1.0" data-max-scroll="1400"></div>
+					<div class="parallax-layer layer-top" data-parallax-speed="1.0" data-max-scroll="1400">
+						<div class="content">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				var ParallaxManager, ParallaxPart;
+
+				ParallaxPart = (function() {
+					function ParallaxPart(el) { //获得元素选择器，速度，最大滚动区间
+						this.el = el;
+						this.speed = parseFloat(this.el.getAttribute('data-parallax-speed'));
+						this.maxScroll = parseInt(this.el.getAttribute('data-max-scroll'));
+					}
+
+					ParallaxPart.prototype.update = function(scrollY) { //设置自定义函数，用于计算更新位置
+						if(scrollY > this.maxScroll) {
+							return;
+						}
+						var offset = -(scrollY * this.speed);
+						this.setYTransform(offset);
+					};
+
+					ParallaxPart.prototype.setYTransform = function(val) { //用于执行更新
+						this.el.style.webkitTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.MozTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.OTransform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.transform = "translate3d(0, " + val + "px, 0)";
+						this.el.style.msTransform = "translateY(" + val + "px)";
+					};
+
+					return ParallaxPart;
+
+				})();
+
+				ParallaxManager = (function() {
+					ParallaxManager.prototype.parts = []; //存放每个元素的数据，包括el，maxScroll，speed
+
+					function ParallaxManager(elements) {
+
+						this.elements = document.querySelectorAll(elements); //选择所有子级元素
+						console.log(this.elements); //数组，每个数组的元素为一个选择器，选择子div
+
+						//						this.elements = Array.prototype.slice.call(this.elements); //将NodeList数据结构转为Array数组
+						var arr = []
+						for(var i = 0; i < this.elements.length; i++) { //把选择器用循环遍历出来会得到html原型代码
+							arr.push(this.elements[i])
+						}
+
+						for(var i = 0; i < arr.length; i++) { //this.elements为数组
+							//							console.log(arr[i]);
+							this.parts.push(new ParallaxPart(arr[i])); //this.elements[i]为单独的元素
+							console.log(this.parts[i]);
+						}
+						window.addEventListener("scroll", this.onScroll.bind(this));
+					}
+
+					ParallaxManager.prototype.onScroll = function() {
+						window.requestAnimationFrame(this.scrollHandler.bind(this));
+					};
+
+					ParallaxManager.prototype.scrollHandler = function() {
+						var scrollY = Math.max(window.pageYOffset, 0);
+						for(var i in this.parts) {
+							this.parts[i].update(scrollY);
+							//							console.log(this.parts);
+						}
+					};
+
+					return ParallaxManager;
+
+				})();
+
+				var x = new ParallaxManager('.parallax-layer') //从这里开始运行ParallaxManager函数传入参数为存放图片div的父级div   .parallax-layer
+			</script>
+		</body>
+
+		</html>
+
+	</body>
+
+</html>

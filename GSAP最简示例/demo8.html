@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>GreenSock: Control Playback</title>
+ 
+<style>
+body{
+    background-color:#000;
+}
+#demo {
+    width: 692px;
+    height: 60px;
+    background-color: #333;
+    padding: 8px;
+}
+
+</style>
+</head>
+ 
+<body>
+<div id="demo">
+    <img id="logo" src="../img/logo-onboard-video.svg" style="position: relative;width: 60px;height: 60px;"/>
+</div>
+
+ 
+<!--- loading easePack because the tween uses a Linear ease -->
+<script src="../js/EasePack.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/CSSPlugin.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script>
+
+/*
+ TweenMax扩展了TweenLite，因此它可以使用相同的语法来完成TweenLite的所有功能。
+ TweenMax提供最大的功能和便利性，而TweenLite优先考虑紧密的文件大小。
+ TweenMax JS文件还包括几个流行的插件（如CSSPlugin，BezierPlugin和RoundPropsPlugin），
+ 更简单，还有TimelineLite和TimelineMax，因此加载的文件较少。
+ */
+
+$(document).ready(function(){
+	var logo = document.getElementById("logo");
+    TweenMax.to(logo, 1, {left:"300px", repeat:3, repeatDelay:2,yoyo:true});
+    //当yoyo设置为true时，动画将每次重复时平滑地反转方向。要无限期重复，将重复设置为-1。
+})
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/MorphSVGPlugin.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/findshape.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			#LW1, #LW2{
+				visibility: hidden;/*将目标图形隐藏*/
+			}
+
+		</style>
+		<script type="text/javascript">
+
+
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				var shape1 = $('#LW1')
+				tl.to(shape1,1,{morphSVG:'#LW2',onStart:visibility,repeat:-1,yoyo:true,ease:Bounce.easeOut})
+
+				  
+				function visibility(){
+					$('#LW1').css('visibility','visible')
+				}
+				
+			})
+		</script>
+	</head>
+	<body>
+		<svg style="width: 100%;height: 400px;background: rgb(242,216,211);" viewBox="9 0 280 250">
+<path id="LW1" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M150 13.315v241.018" data-original="M151.422 12.315c0 1.623-10.422 1.623-10.422 3.247 0 1.624 18 1.624 18 3.247 0 1.62-18 1.62-18 3.24s18 1.62 18 3.25-18 1.62-18 3.242 18 1.624 18 3.25c0 1.62-18 1.62-18 3.24 0 1.625 18 1.625 18 3.248 0 1.62-18 1.62-18 3.244 0 1.623 18 1.623 18 3.25s-18 1.62-18 3.245c0 1.622 18 1.622 18 3.246s-18 1.624-18 3.25 18 1.624 18 3.25-18 1.624-18 3.25c0 1.623 18 1.623 18 3.25 0 1.623-18 1.623-18 3.247 0 1.627 18 1.627 18 3.253 0 1.628-18 1.628-18 3.255s10.422 1.628 10.422 3.255"></path>
+<path id="LW2" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M151.422 12.315c0 1.623-10.422 1.623-10.422 3.247 0 1.624 18 1.624 18 3.247 0 1.62-18 1.62-18 3.24s18 1.62 18 3.25-18 1.62-18 3.242 18 1.624 18 3.25c0 1.62-18 1.62-18 3.24 0 1.625 18 1.625 18 3.248 0 1.62-18 1.62-18 3.244 0 1.623 18 1.623 18 3.25s-18 1.62-18 3.245c0 1.622 18 1.622 18 3.246s-18 1.624-18 3.25 18 1.624 18 3.25-18 1.624-18 3.25c0 1.623 18 1.623 18 3.25 0 1.623-18 1.623-18 3.247 0 1.627 18 1.627 18 3.253 0 1.628-18 1.628-18 3.255s10.422 1.628 10.422 3.255" data-original="M151.422 12.315c0 1.623-10.422 1.623-10.422 3.247 0 1.624 18 1.624 18 3.247 0 1.62-18 1.62-18 3.24s18 1.62 18 3.25-18 1.62-18 3.242 18 1.624 18 3.25c0 1.62-18 1.62-18 3.24 0 1.625 18 1.625 18 3.248 0 1.62-18 1.62-18 3.244 0 1.623 18 1.623 18 3.25s-18 1.62-18 3.245c0 1.622 18 1.622 18 3.246s-18 1.624-18 3.25 18 1.624 18 3.25-18 1.624-18 3.25c0 1.623 18 1.623 18 3.25 0 1.623-18 1.623-18 3.247 0 1.627 18 1.627 18 3.253 0 1.628-18 1.628-18 3.255s10.422 1.628 10.422 3.255"></path>
+		</svg>
+	</body>
+</html>

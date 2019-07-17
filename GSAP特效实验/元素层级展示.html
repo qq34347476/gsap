@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			.container {
+				-webkit-perspective: 1200;
+				-webkit-transform-style: preserve-3d;
+				border: 2px dashed black;
+				width: 600px;
+				height: 450px;
+				position: absolute;
+				margin: auto;
+				left: 0;
+				right: 0;
+				top: 800px;
+				bottom: 0;
+			}
+			
+			.box {
+				-webkit-transform-style: preserve-3d;
+			}
+			
+			.container div {
+				width: 450px;
+				height: 300px;
+				position: absolute;
+				margin: 100px 80px;
+			}
+			
+			.a {
+				background: lightblue;
+				opacity: 0.8;
+			}
+			
+			.b {
+				background: lightcoral;
+				opacity: 0.8;
+			}
+			
+			.c {
+				background: lightpink;
+				opacity: 0.8;
+			}
+			
+			.d {
+				background: lightgoldenrodyellow;
+				opacity: 0.6;
+			}
+			
+			.e {
+				background: lightseagreen;
+				opacity: 0.8;
+			}
+			
+			body {
+				-webkit-perspective: 2100;
+				overflow: hidden;
+			}
+		</style>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('.container').hover(function() {
+					TweenMax.to(this, 0.5, {
+						transform: 'rotateY(47deg) rotateX(0deg) rotateZ(-5deg)'
+					});
+				}, function() {
+					TweenMax.to('*', 0.5, {
+						transform: 'rotateY(0deg) rotateX(0deg) rotateZ(0deg)'
+					});
+				})
+
+				var index = 100
+
+				$('.container').hover(function() {
+					TweenMax.to('.container', 0.3, {
+						x: -300,
+						z: -2000
+					})
+					$('.box div').each(function(el, i) {
+						TweenMax.to(i, 0.5, {
+							transform: 'translateZ(' + index + 'px)'
+						})
+						index += 100
+					})
+					index = 100
+				}, function() {
+					$('.box div').each(function(el, i) {
+						TweenMax.to(i, 0.5, {
+							transform: 'translateZ(0)'
+						})
+
+					})
+					TweenMax.to('.container', 0.3, {
+						x: 0,
+						z: 0
+					})
+				})
+
+				$('.box *').each(function(el, i) {
+
+					$(i).hover(function() {
+
+						TweenMax.to(i, 0.3, {
+							width: 540,
+							height: 360,
+							x: -30,
+							y: -50
+
+						})
+
+					}, function() {
+						TweenMax.to(i, 0.3, {
+							width: 450,
+							height: 300,
+							x: 0,
+							y: 0
+						})
+
+					})
+					$(i).click(function() {
+						console.log("1");
+						TweenMax.to('.box', 0.3, {
+							z: el * -100
+						})
+
+					})
+
+				})
+			})
+		</script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="box">
+				<div class="a">
+
+				</div>
+				<div class="b">
+
+				</div>
+				<div class="c">
+
+				</div>
+				<div class="d">
+
+				</div>
+				<div class="e">
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.to('img',1,{bezier:{values:[{x:0,y:0},{x:200,y:100},{x:0,y:300}],type:'soft',autoRotate:true,curviness:0}})
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="position: absolute;width: 100px;"/>
+	</body>
+</html>

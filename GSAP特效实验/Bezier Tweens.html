@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP JS Bezier: Cubic / TimelineMax Page</title>
+  
+  
+  <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+
+     <style type="text/css">
+     	body{
+  background-color:#333;
+  margin:0;
+}
+
+#container{
+  background-color:black;
+  width:838px;
+  height:400px;
+  overflow:hidden;
+  position:relative;
+  
+}
+
+#playPause{
+  position:absolute;
+  left:720px;
+  top:350px;
+  z-index:1;
+}
+
+.creature{
+  background:url(../img/creature_red.png);
+  width:27px;
+  height:29px;
+  
+  position:absolute;
+  
+}
+
+
+#slider{
+  position:relative;  
+  width:700px;
+  top:20px;  
+  left:25px;
+}
+
+.ui-slider .ui-slider-handle { 
+  width: 40px !important; 
+  margin-left: -20px !important; 
+  height:40px !important; 
+  margin-top:-10px !important;
+}
+
+button {
+  width:100px;
+  padding:10px;
+}
+     </style>
+  
+</head>
+
+<body>
+  <button id="playPause">play</button>
+<div id="container"></div>
+<div id="slider"></div>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax-latest-beta.js" type="text/javascript" charset="utf-8"></script>
+<script src='../js/jquery.ui.touch-punch.min.js'></script>
+
+   <script type="text/javascript">
+   	/*
+GSAP JS Demo
+http://www.greensock.com/gsap-js/
+Animation and Bezier motion: 
+http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js
+*/
+
+var container = $("#container"),
+    tl;
+
+function getAnimation() {
+  var element = $('<div class="creature"/>');
+  container.append(element);
+  TweenLite.set(element, {x:0, y:0})
+  //bezier magic provided by GSAP BezierPlugin (included with TweenMax)
+  //http://api.greensock.com/js/com/greensock/plugins/BezierPlugin.html
+  
+ //create a semi-random tween 
+  var bezTween = new TweenMax(element, 6, {
+    bezier:{
+      type:"thru", //thru(默认),quadratic,soft,cubic
+      values:[{x:100,y:0},{x:100,y:100},{x:300,y:100},{x:300,y:300}],
+      autoRotate:false//是否让图形根据路径旋转
+    },
+    ease:Linear.easeNone});
+  return bezTween;
+}
+
+//create a bunch of Bezier tweens and add them to a timeline
+function buildTimeline() {
+  tl = new TimelineMax({repeat:300, onUpdate:updateSlider, delay:1});
+  for (i = 0 ; i< 20; i++){
+    //start creature animation every 0.17 seconds
+    tl.add(getAnimation(), i * 0.17);
+  }
+}
+
+
+// --- jQueryUI Controls --- //
+
+$("#slider").slider({
+  range: false,
+  min: 0,
+  max: 1,
+  step:0.001,
+  slide: function ( event, ui ) {
+    tl.pause();
+    //adjust the timeline's progress() based on slider value
+    tl.progress( ui.value);
+    }
+});
+
+function updateSlider() {
+  $("#slider").slider("value", tl.progress());
+} 
+
+$("#slider, .ui-slider-handle").mousedown(function() {
+  $('html, #slider, .ui-slider-handle').one("mouseup", function(e){
+    tl.resume();
+  });
+});
+
+
+//smoothe play pause by tweening the timeScale()
+
+$("#playPause").click(function(){
+  if(this.innerHTML === "play"){
+    this.innerHTML = "pause"
+    TweenLite.to(tl, 2, {timeScale:1})
+  } else {
+    this.innerHTML = "play"
+    TweenLite.to(tl, 2, {timeScale:0})
+  }
+})
+
+buildTimeline();
+tl.progress(0.5).timeScale(0);
+   </script>
+</body>
+</html>
+<!--<html>
+
+	<head>
+		<title></title>
+		<script src="../js/BezierPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#myDiv {
+				width: 100px;
+				height: 100px;
+				background: coral;
+				position: relative;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//tween the "left" and "top" css properties through the supplied values (notice we're passing the array directly to the bezier rather than creating an object with "values" because we're accepting the defaults)
+				//TweenMax.to(document.getElementById("myDiv"), 5, {bezier:[{left:100, top:250}, {left:300, top:0}, {left:500, top:400}], ease:Power1.easeInOut});
+
+				//if we want to customize things, like the curviness and setting autoRotate:true, we need to define the bezier as an object instead, and pass our array as the "values" property
+				TweenMax.to(document.getElementById("myDiv"), 5, {
+					bezier: {
+						curviness: 1.25,
+						values: [{
+							x: 100,
+							y: 250
+						}, {
+							x: 300,
+							y: 0
+						}, {
+							x: 500,
+							y: 400
+						}],
+						autoRotate: true
+					},
+					backgroundColor: "#f00",
+					ease: Power1.easeInOut
+				});
+				// 
+				////let's define the type as "soft" instead of using the default "thru"
+				//TweenMax.to(document.getElementById("myDiv"), 5, {bezier:{type:"soft", values:[{x:100, y:250}, {x:300, y:0}, {x:500, y:400}], autoRotate:true}, ease:Power1.easeInOut});
+				// 
+				////now we'll do a cubic Bezier and make our target auto rotate but add 45 degrees to the rotation
+				//TweenMax.to(document.getElementById("myDiv"), 5, {bezier:{type:"cubic", values:[{x:100, y:250}, {x:150, y:100}, {x:300, y:500}, {x:500, y:400}], autoRotate:["x","y","rotation",45,false]}, ease:Power1.easeInOut});
+				// 
+				////NON-CSS, generic x/y property tween: animate obj through the points in the array (notice we're passing the array directly to the bezier rather than creating an object with "values" because we're accepting the defaults)
+				//TweenMax.to('#myDiv', 5, {bezier:[{x:100, y:250}, {x:300, y:0}, {x:500, y:400}], ease:Power1.easeInOut});
+			})
+		</script>
+	</head>
+
+	<body>
+		<div id="myDiv">
+
+		</div>
+	</body>
+
+</html>-->

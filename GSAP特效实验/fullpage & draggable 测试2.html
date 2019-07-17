@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var windowHeight = $(window).outerHeight() 		////////////////$(window).outerHeight()
+				,scrollTop = 0
+				,$container = $('.container')
+				,position = windowHeight * 4
+				
+				TweenMax.set("[class^='page']",{height:windowHeight})
+				TweenMax.set($container,{height:windowHeight*9,y:'-'+windowHeight*4})
+				TweenMax.set('.scrollBox',{height:windowHeight*5,y:windowHeight*4})
+				
+				Draggable.create('.scrollBox',{type:'y',trigger:"[class^='page']",throwProps:true,bounds:$container,snap:function(endValue){
+					return Math.round( endValue / windowHeight) * windowHeight
+				}})
+				
+				function GO(e){
+				 	var SD=isNaN(e)?e.wheelDelta||-e.detail:e;
+					if(SD>0){//当滚轮向下滚动时
+					position+=windowHeight	
+					if(position == windowHeight*5){
+						position = windowHeight*4
+					}
+					TweenMax.to('.scrollBox', 0.8, {y:position,ease:Back.easeOut});//上一页
+					
+					}else{
+					position -= windowHeight	
+					if(position == - windowHeight){
+						position=0
+					}
+						TweenMax.to('.scrollBox', 0.8, {y:position,ease:Back.easeOut});//下一页
+						
+					}
+				}
+
+				document.addEventListener("mousewheel",GO);
+				
+				$('.sideDot li').click(function(){
+					var num = $(this).index()
+					position = windowHeight * (4 - num)
+					TweenMax.to('.scrollBox',1,{y:position,ease:Back.easeOut,onComplete:hash})
+					function hash(){		//当子页面切换完成时，才能改变锚，否则先跳转到锚点所在的页面再做页面跳转的位移将相对于锚点位置
+						location.hash = 'page'+(num + 1)
+					}
+				})
+			})
+		</script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			body{overflow: hidden;}
+			.container,.scrollBox{width: 100%;}
+			.container{background: #333;position: relative;}
+			.scrollBox{background: coral;position: absolute;}
+			[class^='page']{width: 100%;height: 100px;text-align: center;;font-size: 100px;line-height: 800px;color: ghostwhite;}
+			.page1{background: #29363B;}
+			.page2{background: #EA495F;}
+			.page3{background: #F4837D;}
+			.page4{background: #FDCEA9;}
+			.page5{background: #99B998;}
+			
+			.sideDot{position: fixed;display: block;right: 0;background: coral;opacity: 0.8;top: 45%;width: 30px;height: 100px;z-index: 999;}
+			.sideDot li{display: block;background: white;border-radius: 50%;margin: 9px auto;width: 9px;height: 9px;cursor: pointer}
+			.sideDot li:hover{background: greenyellow;}
+			.sideDot li a{display: block;}
+		</style>
+	</head>
+	<body>
+		<div class="sideDot">
+			<ul>
+				<li><a href="#page1"></a></li>
+				<li><a href="#page2"></a></li>
+				<li><a href="#page3"></a></li>
+				<li><a href="#page4"></a></li>
+				<li><a href="#page5"></a></li>
+			</ul>
+		</div>
+		<div class="container">
+			<div class="scrollBox">
+				<div class="page1" id="page1">1</div>
+				<div class="page2" id="page2">2</div>
+				<div class="page3" id="page3">3</div>
+				<div class="page4" id="page4">4</div>
+				<div class="page5" id="page5">5</div>
+			</div>
+		</div>
+	</body>
+</html>

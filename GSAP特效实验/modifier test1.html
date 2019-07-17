@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax-latest-beta.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ModifiersPlugin-latest-beta.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.to('img',100,{rotation:360,repeat:-1,ease:Linear.easeNone,modifiers:{rotation:function(rotation){
+					console.log(rotation)
+					$('p').text('旋转'+rotation.toFixed()+'度')
+					return rotation
+//					return Math.round(rotation / 45) * 45
+				}}})
+			})
+		</script>
+		<style type="text/css">
+			.container *{display: block;text-align: center;margin: auto;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<img src="../img/knob.png"/>
+		<p style="font-size: 80px;"></p>
+		</div>
+	</body>
+</html>

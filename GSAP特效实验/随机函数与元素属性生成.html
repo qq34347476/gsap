@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/ScrollToPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			div{margin-left: 200px;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(window).click(function(){	//	当页面被点击时返回顶部
+					TweenMax.to(window,1,{scrollTo:{y:0},ease:Bounce.easeOut})
+				})
+				var width,height,x,y,color
+				var tl = new TimelineLite() //初始化TimelineLite
+				console.log('第一次初始化对象:');
+				console.log(tl);
+     			var colors = ["rgba(254,67,101)","rgba(252,157,154)","rgba(249,205,173)","rgba(200,200,169)","rgba(131,175,155)"];
+				
+				var c = tl.add(getDiv())//向TimelineLite对象中添加数据->要添加的补间，时间线，回调或标签（或它们的数组）
+				console.log('向对象中加入对象:');
+				console.log(c);
+				
+				function getPosition(){//获取随机的位置数据
+						x = Math.random() * 500
+						y = Math.random() * 200
+				}
+				
+				function getSize(){//获取随机的尺寸数据
+					width = Math.random() * 640
+					height = Math.random() * 230
+				}
+				
+				move()
+				function move(){
+					$('div').each(function(index,element){//选择每个div，获得他们的数据，然后做相应的动画
+						getPosition()
+						getSize()
+						TweenMax.to(element,1,{x:x, y:y, width:width, height:height, onComplete:move})//当动画完成的时候,再次调用move()，实现死循环
+					})
+				}
+				
+				function getDiv(){
+  					var divs = new TimelineLite()//在新对象中创建数据
+					console.log('getDiv初始化的对象:');
+					console.log(divs);
+
+					function Random(){//随机抽取属性
+						getSize()
+						getPosition()
+						color = colors[(Math.random() * colors.length) | 0];//抽取颜色(用｜0来取整数)
+					}
+					for (var i = 0; i < 30; i++) {
+						Random()//刷新div属性
+						div = $('<div class="box"/>').appendTo('body')[0]//向body内增加div
+						TweenLite.set(div,{backgroundColor:color, x:x, y:y, width:width, height:height})//初始化每个div的属性
+						
+					}
+					console.log('getDiv提供的对象:');
+					console.log(divs);
+					
+					return divs//返回对象到父对象内
+				}
+			})
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

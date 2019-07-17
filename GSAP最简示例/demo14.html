@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()//使用时需要先实例化对象
+				
+				//然后实体tl将成为时间轴，做一系列同步运行操作，不是异步(之前用TweenMax都是用delay来实现)
+				tl.to('img',1,{x:100})
+				  .to('img',1,{y:100})
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/timelinelite.png" style="position: relative;"/>
+	</body>
+</html>

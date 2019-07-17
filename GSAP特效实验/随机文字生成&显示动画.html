@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>GSAP Scramble Text Plugin - feature plugin page</title>
+  
+  
+  <link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
+
+      <style>
+		body {
+		  margin:0;
+		}
+		
+		.demo {
+		  background-color:#1d1d1d;
+		  font-family: Signika Negative, sans-serif;
+		  font-weight: 300;
+		  color:#989898; 
+		  padding:10px;
+		  
+		  font-size:20px;
+		  line-height:30px;
+		}
+		#textblock {
+		  height:140px;
+		}
+		.Green{color: #1ff042;text-shadow: 0 0 2px rgba(31, 240, 66, 0.75);}
+		
+		
+    </style>
+<!--以下脚本可以让css属性的前缀可以省略不写-->
+<!--NOTE:样式添加内联因为prefixfree需要访问你的风格和他们必须内联如果他们在本地磁盘!-->
+<script src="../js/prefixfree.min.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>
+<!--text  ：String - 应替换DOM元素中现有文本（必需）的文本。
+chars  ：String - 应随机交换到加扰部分的文本的字符。您可以使用  "upperCase"，  "lowerCase"，  "upperAndLowerCase"，或字符的自定义字符串，如  "XO" 或  "TMOWACB"，或  "jompaWB!^"等。（默认值：  "upperCase"）
+tweenLength  ：Boolean - 如果替换文本的长度与原始文本不同，则差异将逐渐补间，以使长度不会突然跳转。例如，如果原始文本为50个字符，替换文本为100个字符，则在补间数字将逐渐从50移动到100，而不是将immediatley跳转到100.但是，如果您愿意立即使用跳跃，设置  tweenLength 到  false。（默认值：  true）
+revealDelay  ：Number - 如果您想要对新文本的显示（解密）延迟某一部分补间，以使加扰的文本完全可见一段时间，则可以使用  revealDelay 来定义您想要的时间在揭幕开始之前经过。例如，如果补间的持续时间为3秒，但是您希望加扰的文字在补间的前1秒保持完全可见，您将设置  revealDelay 为  1。（默认值：  0）
+newClass  ：String - 如果您希望  新  文本应用一个特定的类（使用围绕它的<span>标签），请使用  newClass:"YOUR_CLASS_NAME"。这样可以轻松地为新文本创建一个独特的外观。（默认值：  null）
+oldClass  ：String - 如果您希望  旧的  （原始）文本应用特定的类（使用围绕它的<span>标签），请使用  oldClass:"YOUR_CLASS_NAME"。这样可以轻松地为旧文本创建一个独特的外观。（默认值：  null）
+speed  ：数字 - 控制刷新字符的频率。默认值是，  1 但是您可以通过使用0.2 例如（或任何数字）来减慢事情  。（默认值：1）
+delimiter  ：String - 默认情况下，每个字符都会逐个替换，但如果您希望逐个显示文字，则可以使用  " " （空格）的分隔符。（默认值：  ""）
+rightToLeft  ：Boolean（默认为false） - 如果为true，文本将从右到左显示。-->
+
+<div class="demo">
+	
+  	<div id="textblock">
+    		<div id="scramble">原文本</div> 
+   </div>
+</div>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/ScrambleTextPlugin.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var tl = new TimelineMax();
+		//scramble攀登，爬; 争夺
+		tl.to("#scramble", 3, {scrambleText:{text:"ScrambleText allows you to animate the scrambling of text.",speed:1,newClass:'Green',oldClass:'Green', chars:"lowerCase", revealDelay:0.5, tweenLength:false, ease:Linear.easeNone}})
+
+	})
+</script>
+</body>
+</html>

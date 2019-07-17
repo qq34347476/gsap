@@ -1,0 +1,117 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/CustomEase.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.defaultEase = Linear.easeNone
+				TweenMax.set('g',{y : window.innerHeight / 2})
+				
+				var svg = document.querySelector("svg")
+				,$wave =document.querySelector("#wave")
+				,contour = new CustomEase('contour','M0,0 L100,50 L 200,0')
+				,width = 800
+				,segments = 100
+				,interval = width / segments
+				,wave = {
+					amplitude : 0,
+					frequency : 1,
+					points : []
+				};
+				
+				for(var i = 0; i < segments; i++){
+					 var period = i / segments;
+            //period时间 在此指节点生成进度
+            var point = $wave.points.appendItem(svg.createSVGPoint()); //在path标签内建立节点
+
+            point.x = i * interval; //interval间隔;区间  每个节点之间的距离
+            point.y = 0; //初始化节点纵坐标
+
+            wave.points.push({
+                ratio: 0, //比例;比  即幅度百分比
+                period: period, //储存生成点集完成过程的进度
+                point: point, //将生成的所有point储存
+                update: function() { //	<-----		
+                    //此函数根据M0,0 L100,50 L 200,0这样的曲线或折线来确定幅度从0到最大值时的增加趋势，是匀速增加还是匀加速
+                    var cycle = Math.sin(this.period * wave.frequency * Math.PI * 2); //循环=点生成过程的进度 * 频率 * 2派，求得sin函数的值域-1~1
+                    console.log(cycle); //0～1～0～－1～0  即sin函数图像在值域1～－1上波动
+                    //高度＝幅度百分比 * 振幅最大值600 ／ 2
+                    var height = this.ratio * wave.amplitude / 2;
+                    this.point.y = cycle * height; //点高 = sin函数的值 * SVG路径趋势决定的幅度变化量
+                }
+            });
+            //console.log(point);//point为SVGPoint类型数据(一个对象)，其中包括了点的x,y坐标
+					
+				}
+				
+				var tl1 = new TimelineMax()
+				.to(wave,1,{amplitude:6000})
+				var tl2 = new TimelineMax()
+				.to(wave,2,{frequency:5})
+				var tl3 = new TimelineMax()
+				.to(wave.points,2,{ratio:function(i,point){
+					return contour.getRatio(point.period)
+				},onComplete:remove})
+				
+				TweenMax.ticker.addEventListener('tick',update)
+				
+				function remove(){
+					TweenMax.ticker.removeEventListener('tick',update)
+				}
+				
+				function update(){
+					var len = segments
+					for (var i = 0; i < len; i++) {
+						wave.points[i].update()
+					}
+				}
+			})
+		</script>
+		<style type="text/css">
+			body {
+            height: 100vh;
+            background: #111;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        svg {
+            width: 800px;
+            height: 100%;
+            padding: 50px;
+        }
+        
+        line {
+            stroke-width: 1;
+            stroke: #3c3c3c;
+        }
+        
+        #wave {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: #56acf4;
+        }
+		</style>
+	</head>
+	<body>
+		<svg>
+			<g>
+				<line id='line' x1='0' x2='100%' />
+				<polyline id='wave' />
+			</g>
+		</svg>
+	</body>
+</html>

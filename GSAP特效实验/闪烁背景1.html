@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			.backgroundBox{
+				width: 400px;height: 700px;margin: auto;position: relative;padding-top: 20px;
+			}
+			.backgroundBox img{opacity: 0;display: block;top: 20;left: 30px;position: absolute;}
+			/*.show{opacity: 1 !important;}*/
+			.show{opacity: 1 !important;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				var imgTag
+				var delay = ''
+				
+				creatTimeline()//此函数用于创建时间轴，以设置随机闪烁动画
+				
+				function showImg(message){
+					//每闪烁一次，showTimes加1，如果闪烁了5次那么就重新调用一次创建函数，以建立新的时间轴
+					kill()
+					creatTimeline()
+					$('.backgroundBox img').removeClass('show')//移除.backgroundBox内元素的所有.show，即让所有img隐藏
+					$(message).addClass('show')//然后给随机抽中的img添加.show作为标记
+				}
+				
+				function kill(){//重置时间轴，让动画回到开始时
+					tl.clear().time(0)
+				}
+				
+				function creatTimeline(){
+						delay = '+='+Math.random() * 0.7//时间轴节点的相对偏移，即延时
+						imgTag = '.img' + Math.floor(( Math.random() * 4 ) + 1)//获取.img1 ~ .img4中的随机一张 (http://www.runoob.com/jsref/jsref-random.html)
+						console.log(delay+' '+ imgTag);
+						//
+						tl.to('.show',0,{onComplete:showImg,onCompleteParams:[imgTag]},delay)//如果html代码中第一个img元素没有.show此语句依然执行，并在结束时调用showImg()函数
+						//onComplete事件钩子在动画完成时激活showImg函数，onCompleteParams传给showImg函数一个参数,此参数包含显示的图片的class,也就是一个选择器
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<div class="backgroundBox">
+			<img src="../img/AAFj2HAe02tRQAAAAAElFTkSuQmCC.png" class="img1 show"/><!--注意这一张图片拥有.show 这使得在动画未开始时图片是可见的-->
+			<img src="../img/wIMAE6nMpyMLGQrAAAAAElFTkSuQmCC.png" class="img2"/>
+			<img src="../img/cDO6LWoIAAAAASUVORK5CYII=.png" class="img3"/>	
+			<img src="../img/AAAPq1f0fSJQ5AAAAAElFTkSuQmCC.png" class="img4"/>
+		</div>
+	</body>
+</html>

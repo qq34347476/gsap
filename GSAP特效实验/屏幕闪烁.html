@@ -1,0 +1,97 @@
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+				//我们需要建立一个容器div，让其透明度随时间轴逐渐变低
+				//然后生成30个小的div，位置随机产生，延时随机产生，并且执行一个闪烁显示的效果，然后重新set他们(此效果重复4次)
+				
+				var tl = new TimelineMax()
+				, delay, x, y, width, height, windowSizeX = $(document).width(), windowSizeY = $(document).height()
+  				,rough = RoughEase.ease.config({strength:2, clamp:true,points:50}), rectNum = 30
+				
+				
+				$(window).resize(function(){
+					removeDiv()
+					windowSizeX = $(document).width()
+					windowSizeY = $(document).height()
+					creatDiv()
+					twinkle()
+				})
+
+				function getRandom(){
+					delay = Math.random() * 0.6
+					width = Math.floor( (Math.random() * 250) + 50 )
+					height = Math.floor( (Math.random() * 40) + 20 )
+					x = Math.floor( (Math.random() * windowSizeX) + 100 ) - width
+					y =	Math.floor(Math.random() * windowSizeY) - height
+
+					console.log("x: "+x+' y: '+y+' delay: '+delay);
+				}
+				
+				function kill(){
+					tl.clear().time(0)
+				}
+				
+				function removeDiv(){
+					kill()
+					$('[class^="rect"]').remove()
+				}
+				
+				function creatDiv(){
+					console.log("1");
+					for (var i = 0; i < rectNum; i++) {
+						$('.page').append('<div class="rect'+i+'" />')
+					}
+					$('[class^="rect"]').each(function(index, el){
+						console.log("1");
+						getRandom()
+						tl.set($(el),{x : x, y : y, width: width, height : height})
+					})
+				}
+				
+				function delect(message){
+					$(message).remove()
+				}
+				
+				var bool = 1,times=0,autoAlpha=0
+				function twinkle(){
+					console.log("2");
+					var tl = new TimelineLite()
+					for (i = 0; i < rectNum; i++) {
+					  autoAlpha = Math.random() * 0.6 +0.2
+					  console.log(autoAlpha);
+					  tl.to('.rect'+i, 0.3, {autoAlpha:autoAlpha, ease:rough,onComplete:delect,onCompleteParams:['.rect'+i]},Math.random())//闪出
+
+					}
+					if(times<3){
+						times++
+						tl.to('.page',1,{autoAlpha:'+=0.3',ease:rough},1)
+						tl.call(creatDiv)
+						.call(twinkle)
+					}
+
+				}
+				
+				tl.call(creatDiv)
+				
+				.call(twinkle)
+				
+				
+			})
+		</script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			.page{width: 100%;height: 850px;background: black;opacity: 0;}
+			[class^="rect"]{position: absolute;background: white;opacity: 0;}
+		</style>
+	</head>
+	<body style="background: url(../img/9k=.jpg) no-repeat;background-size: cover;">
+		<div class="page">
+			
+		</div>
+	</body>
+</html>

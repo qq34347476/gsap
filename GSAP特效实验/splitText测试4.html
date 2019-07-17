@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				,$text = $('.text')
+				,splitText = new SplitText($text),x,y
+				
+				tl.set($text,{perspective:400})
+				
+				
+				
+				splitText.split({type:'chars'})
+				
+				function random(min, max){
+					return (Math.random() * (max - min)) + min;
+				}
+
+				$(splitText.chars).each(function(index,el){
+
+//					TweenMax.set($(el),{position:'absolute'})
+
+
+					TweenMax.staggerFrom($(el),2,{x: random(-500, 500),y:random(-500, 500),z:random(-500, 500),opacity:0},0.02)
+				})
+			})
+		</script>
+		<style type="text/css">
+			.text{font-size: 20px;width: 500px;margin: auto;margin-top: 200px;text-align: center;}
+		</style>
+	</head>
+	<body>
+
+			<div class="text">Vticn is a great front end engineer team<br />we have the best technology and overcome the difficulties of perseverance<br />for the potential benefits and partners<br />pain and happiness</div>
+
+</html>

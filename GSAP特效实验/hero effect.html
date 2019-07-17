@@ -1,0 +1,93 @@
+<html>
+
+	<head>
+		<title></title>
+		<meta charset="UTF-8" />
+		<style type="text/css">
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+				padding: 0;
+				margin: 0;
+			}
+			
+			html,
+			body {
+				height: 100%;
+			}
+			
+			body {
+				font-family: 'Julius Sans One', sans-serif;
+				font-size: 14px;
+			}
+			
+			.heroEffects {
+				height: 100vh;
+				position: relative;
+				z-index: -1;
+				top: 0;
+				left: 0;
+			}
+			
+			.heroEffects .bg {
+				height: 100vh;
+				position: fixed;
+				width: 100%;
+				background-image: url(https://d3cbihxaqsuq0s.cloudfront.net/images/39460720_xl.jpg);
+				background-repeat: no-repeat;
+				background-size: cover;
+				background-position: center center;
+				-webkit-transform: scale(1);
+				transform: scale(1);
+			}
+			
+			.heroEffects .shade {
+				opacity: 0;
+				background: rgba(0, 0, 0, 0.8);
+				z-index: 3;
+				height: 100vh;
+				position: fixed;
+				width: 100%;
+			}
+			
+			.content {
+				height: 100vh;
+				background: #cdcdcd;
+				padding: 150px 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class='heroEffects'>
+			<div class="bg">
+				
+				
+			</div>
+			<div class="shade"></div>
+		</div>
+
+		<div class='content'>
+
+			<p>Bataille's analysis of predialectic objectivism holds that culture is used in the service of archaic, sexist perceptions of art. A number of constructions concerning capitalist objectivism may be found. However, the primary theme of von Ludwig's[2] model of pretextual capitalist theory is the bridge between society and class. If capitalist objectivism holds, we have to choose between predialectic objectivism and Lacanist obscurity.</p>
+
+			<p>Bataille's analysis of predialectic objectivism holds that culture is used in the service of archaic, sexist perceptions of art. A number of constructions concerning capitalist objectivism may be found. However, the primary theme of von Ludwig's[2] model of pretextual capitalist theory is the bridge between society and class. If capitalist objectivism holds, we have to choose between predialectic objectivism and Lacanist obscurity.</p>
+
+		</div>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(window).scroll(function() {
+				var num1 = $(window).scrollTop()
+				var a = num1 / 1000
+				var b = num1 * 0.001 + 1
+				$('.shade').css('opacity', a)
+				$(".bg").css({
+					"transform": "scale(" + b + ")"
+				})
+
+			})
+		</script>
+	</body>
+
+</html>

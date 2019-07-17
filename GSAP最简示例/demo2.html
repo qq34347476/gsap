@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="width: 100px;position: absolute;" class="man"/>
+		<button class="btn">Keep run</button>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.to('.man',1,{left:100})				
+				$('.btn').click(function(){
+				TweenMax.to('.man',1,{left:'+=100'})
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/DrawSVGPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			
+
+#path {
+
+  stroke-width: 20px;
+  visibility: hidden;
+}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				//https://greensock.com/docs/#/HTML5/GSAP/Plugins/DrawSVGPlugin/
+				var tl = new TimelineLite()
+				TweenLite.set("#path", {visibility:"visible"});
+ 				tl.to("#path", 0, {drawSVG:"0%"})
+ 				  .to("#path", 1, {drawSVG:"100%"})
+				
+			})
+		</script>
+	</head>
+	<body>
+		<svg viewBox="-140 0 516.3 190" style="width: 100%;height: 500px;background: rgb(242,216,211);">
+    				    <defs>
+	        <linearGradient x1="108.792392%" y1="-8.94627747%" x2="-2.58339391%" y2="109.891402%" id="linearGradient-1">
+	            <stop stop-color="#EF1919" offset="0%"></stop>
+	            <stop stop-color="#B019AF" offset="48.8591768%"></stop>
+	            <stop stop-color="#7349CC" offset="69.2397725%"></stop>
+	            <stop stop-color="#1892F8" offset="100%"></stop>
+	        </linearGradient>
+	    </defs>
+	    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+	        <path d="M114.265634,40.6484355 C170.609375,-61.9999927 335.453128,62.4960915 114.265628,158.999998 C-102.851562,73.0369961 51.7812482,-61.9999964 114.265634,40.6484355 Z" id="path" stroke="url(#linearGradient-1)" stroke-width="4" sketch:type="MSShapeGroup"></path>
+    		</g>	
+		</svg>
+	</body>
+</html>

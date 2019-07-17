@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>SplitText: Multiple Split Types</title>
+  
+  <style type="text/css">
+  	body{
+	  font-family: Asap, Arial, Helvetica, sans-serif;
+	  color:white;
+	  background:black url(//s.cdpn.io/16327/texture_bg.jpg) no-repeat 50% 0px;
+	  margin:5% 15% 0 15%;
+	  overflow:hidden;
+	}
+	#demo{
+	  position:relative;
+	}
+	#quote{
+	  font-size:40px;
+	  line-height:50px;
+	  color:#dedede;
+	}
+	
+	button{
+	  padding:10px;
+	  cursor:pointer;
+	}
+	
+	#nav {
+	  padding-bottom:20px;
+	}
+
+  </style>
+</head>
+
+<body>
+  <!-- more SplitText demos here: http://codepen.io/collection/KiEhr -->
+<!--<link  href='//fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>-->
+
+  
+<div id="nav">
+  <button id="chars">chars</button>
+  <!--<button id="words">words</button>
+  <button id="lines">lines</button>
+  <button id="charsWordsLines">chars words and lines</button>
+  <button id="revert">revert</button>-->
+</div>  
+  
+<div id="demo">
+  <div id="quote">SplitText makes it easy to break apart the text in an HTML element so that each character, word, and/or line is wrapped in its own div tag.</div>
+  </div>
+
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+
+ <script type="text/javascript">
+
+var $quote = $("#quote"),
+    mySplitText = new SplitText($quote, { type: "words" }),
+    splitTextTimeline = new TimelineLite();
+
+TweenLite.set($quote, { perspective: 400 });
+
+//杀死任何动画并将文本设置回其预分割状态
+function kill() {
+	console.log(splitTextTimeline);
+    splitTextTimeline.clear().time(0);
+    mySplitText.revert();
+}
+
+$("#chars").click(function() {
+    kill();
+    mySplitText.split({ type: "chars, words" })
+    splitTextTimeline.staggerFrom(mySplitText.chars, 0.6, { scale: 4, autoAlpha: 0, rotationX: -180, transformOrigin: "100% 50%", ease: Back.easeOut }, 0.02);
+})
+
+ </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<!--需要以下扩展-->
+		<script src="../js/TextPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			.red{color: red;}
+			.green{color: green;}
+			.text{font-size: 50px;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+//				TweenLite.to('.text', 2, {text:"This is the new text", ease:Linear.easeNone});
+				//如果你想使用一个不同的分隔符，以便逐字逐句替换，只需设置一个属性，如(delimiter:' ')因为分隔符是' '(一个空格)，那么将会以空格为分隔符逐个替换
+				TweenLite.to('.text', 2, {text:{value:"This is the new text",newClass:'red',oldClass:'green',delimiter:' '}, ease:Linear.easeNone});
+//				delimiter，  newClass和  oldClass 特殊的性质都是可选的。如果使用它们，请确保将它们放在自己的对象内   text:{放在这里面}
+			})
+		</script>
+	</head>
+	<body>
+		<div class="text">
+			This is the old text
+		</div>
+	</body>
+</html>

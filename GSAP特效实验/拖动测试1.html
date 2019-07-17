@@ -1,0 +1,152 @@
+<html>
+
+<head>
+    <meta charset="UTF-8" /><!--必须设定网页的编码方式，否则throwProps:true是无效的-->
+    <script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Draggable.create(".rotation", {
+                type: "rotation",
+                throwProps: true,
+                snap:function(endValue) {
+                	console.log(endValue);
+            		//这个函数被称为ThrowPropsPlugin当鼠标/手指松开，这个地块所在的旋转应结束，我们可以改变的值并返回一个新的代替。这给了我们一个简单的方法来应用自定义的捕捉行为与任何我们想要的逻辑。在这种情况下，我们只需确保结束值的90度增量，但只有当“SNAP”复选框被选中。
+        			return Math.round(endValue / 90) * 90;
+    }
+            });
+            Draggable.create('.xy', {//常规  snap 仅影响结束值
+                type: 'x,y'
+                ,throwProps: true
+                ,bounds: '.container'
+                ,edgeResistance: 0
+                
+//              ,liveSnap:[10,50,200,450]
+//				,liveSnap:{x:[5,20,80,400], y:[10,60,80,500]}
+				,liveSnap:{top:function(endValue) { return Math.round(endValue / 50) * 50; }, left:function(endValue) { return Math.round(endValue / 100) * 100; }}
+
+//将liveSnap设为true，那么snap将不只是影响结束值，而是每次拖动都会激活，调用function
+
+//       	    ,liveSnap:true
+//              ,snap:function(endValue){
+//	                	console.log(endValue);
+//	        			return endValue		//必须在snap调用的函数内提供返回值，否则元素不会发生位移，并且报错
+//              }
+            })
+            Draggable.create('.parentBox',{type:'scroll',throwProps:true,onDragEnd:function() {
+            	console.log(this);
+//					console.log("vertical scroll velocity is: " + ThrowPropsPlugin.getVelocity(this.scrollProxy, "top") + ", horizontal scroll velocity is: " + ThrowPropsPlugin.getVelocity(this.scrollProxy, "left"));
+				}})
+            
+            Draggable.create('.input',{type:'x,y',dragClickables:true,throwProps:true,bounds:'.container'})
+
+            Draggable.create('.throwEvent',{type:'x,y',throwProps:true,bounds:'.container',
+            onDragEnd:function() {
+					console.log("x velocity is: " + ThrowPropsPlugin.getVelocity(this.target, "x") + " and the duration is " + this.tween.duration() + " seconds.");
+				}
+//          ,onThrowUpdate:function(endValue){console.log(endValue);}
+//          ,onThrowComplete :function(endValue){console.log(endValue);}
+//          ,throwResistance:3000
+//          ,maxDuration:20
+//   		,overshootTolerance:20
+//			,minimumMovement:20
+//			,force3D:false
+            })
+            
+            Draggable.create('.button',{type:'x,y',dragClickables:true,throwProps:true,bounds:'.container',clickableTest:function(el){console.log(el);}/*,onDrag:function(){console.log(ThrowPropsPlugin.getVelocity(this.target,'x'));}*/})
+				//bounds:告诉一个可拖动的元素，保持在另一个DOM元素（一个容器）的bounds:"#container" 范围内，  或者将边界定义为坐标  bounds:{top:100, left:0, width:1000, height:800} 或特定的最大值/最小值  bounds:{minRotation:0, maxRotation:270}。
+				//trigger起动装置,设置激活可拖动的元素
+				//onPress，onDragStart，onDrag，onDragEnd，onRelease,，onLockAxis，和  onClick。在回调之内，"this"指的是Draggable实例本身，因此您可以轻松访问其“目标”或边界等。如果您喜欢事件侦听器，则可以使用Draggable调度事件，以便您可以执行以下操作：yourDraggable.addEventListener("dragend", yourFunc);
+			
+			$('.button').click(function(){
+				alert('button点击事件响应')
+			})
+			
+			function eventFunc(){
+				console.log("事件激活");
+			}
+			
+			Draggable.create('.event',{type:'x,y',throwProps:true
+//				,onPress:eventFunc
+//				,onDragStart:eventFunc
+//				,onDragEnd:eventFunc
+				,onDrag:eventFunc
+//				,onRelease:eventFunc			//onReleaseParams提供回调参数
+//				,onClick:eventFunc			//onClickParams提供回调参数
+
+//onDragEnd 与 onDragEndParams配合使用，将后者的数组值传递给前者
+//				,onDragEnd:function(message, num) { console.log("message: " + message + ", num: " + num); }
+//				,onDragEndParams:["drag ended", 5]
+			
+			})
+			
+
+			
+var obj = '.xy'
+//首先，开始跟踪“X”和“Y”：
+
+//ThrowPropsPlugin.track(obj, "x,y");
+//console.log(ThrowPropsPlugin.isTracking(obj,'x'));//检查某个目标元素是否被跟踪，只能选择'x'或者'y'不能是'x,y'
+//然后，经过至少100ms，让我们顺利吐温到底X：200，：300
+TweenMax.to(obj, 2, {throwProps:{x:{end:300}, y:{end:300}}, ease:Strong.easeOut});
+ 
+//如果你想使用默认值，对象x和y OBJ。滑行到停止基于速度而不是设定任何目标值，只要使用“自动”：
+//TweenMax.to(obj, 2, {throwProps:{x:"auto", y:"auto"}, ease:Strong.easeOut});
+//你应该  untrack() ，当你不再需要它们，以最大限度地提高性能，并确保东西被释放的垃圾收集跟踪
+        })
+    </script>
+    <style type="text/css">
+        img {
+            display: block;
+            width: 200px;
+            margin: auto;
+            margin-top: 100px;
+        }
+        .parentBox{width: 500px;height: 300px;background: #262626;color: whitesmoke;position: relative;top:100px;overflow: auto;margin: auto;}
+        .childBox{width: 700px;height: 500px;}
+        .input{width: 200px;height: 30px;margin: auto;display: block;margin-top: 50px;border: 1px solid #262626;}
+        a{text-align: center;font-size: 90px;display: block;text-decoration: none;margin-top: 50px;}
+        .button{width: 200px;margin: auto;display: block;margin-top: 100px;}
+        .event{width: 300px;display: block;margin: auto;}
+    </style>
+</head>
+
+<body class="container"> 
+	<img src="../img/knob.png" class="rotation" /> 
+	<img src="../img/logo-onboard-video.svg" class="xy" style="width: 100px;"/> 
+	<input type="text" name="" id="" value="" class="input" placeholder="浏览器默认事件被劫持"/>
+	<img src="../img/logo.png" class="throwEvent"/>
+	<!--<a href="" class="link">GreenSock</a>-->
+	<input type="button" name="" id="" value="Button 可拖动可点击" class="button"/>
+	<img src="../GSAP与视差/images/layer2.png" class="event"/>
+	
+	<div class="parentBox">
+		<div class="childBox">
+			onPress：Function - 一旦鼠标（或触摸）按下  元素就应该调用的函数  。在这个函数内部，  "this" 指的是  Draggable 实例（除非你专门设置了使用范围  onPressScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，pointerEvent （与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onDragStart：函数 - 一旦鼠标（或触摸）移动超过2个像素即可调用该函数  ，这意味着拖动已经开始。在这个函数内部，  "this" 指的是  Draggable实例（除非你专门设置了使用范围  onDragStartScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，  pointerEvent （与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onDrag：功能 - 每次鼠标（或触摸） 在拖动期间移动时应该调用的函数  。在这个函数内部，  "this" 指的是  Draggable 实例（除非你专门设置了使用范围  onDragScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，  pointerEvent（与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onDragEnd：函数 - 拖动后立即释放鼠标（或触摸）时应该调用的函数  。即使没有任何东西被移动，  onDragEnd 总是会触发，而  onClick 只有当鼠标/触摸移动小于3像素时，才会触发回调。在这个函数内部，  "this" 指的是Draggable 实例（除非你专门设置了使用范围  onDragEndScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，  pointerEvent （与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onRelease：功能-是一个应该尽快被称为鼠标（或触摸）函数  释放  被压制的目标元素在具有后，无论是否还是没有什么的被拖入。在这个函数内部，  "this" 指的是  Draggable 实例（除非你专门设置了使用范围onReleaseScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，  pointerEvent（与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onClick：功能 - 只有当鼠标/触摸按下元素并释放而不移动3像素或更多像素时才应该调用的功能。这使得更容易辨别用户的意图（单击或拖动）。在这个函数内部，  "this" 指的是  Draggable 实例（除非你专门设置了使用范围  onClickScope），使得访问目标元素（this.target）或边界坐标（this.maxX, this.minX, this.maxY，和  this.minY）变得容易。默认情况下，pointerEvent （与Draggable相关的最后一个鼠标或触摸事件）将作为回调的唯一参数传递，以便您可以访问其pageX或pageY或target或currentTarget等。<br />
+onPressParams：Array - 用于提供onPress 回调的可选参数数组  。例如，onPressParams:["drag started", 5] 适合这段代码： onPress:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onDragStartParams：Array - 用于提供onDragStart 回调的可选参数数组  。例如，  onDragStartParams:["drag started", 5] 适合这段代码：onDragStart:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onDragParams：Array - 用于提供onDrag 回调的可选参数数组  。例如，onDragParams:["dragged", 5] 适合这段代码： onDrag:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onDragEndParams：Array - 用于提供onDragEnd 回调的可选参数数组  。例如，  onDragEndParams:["drag ended", 5] 适合这段代码：onDragEnd:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onReleaseParams：Array - 用于提供onRelease 回调的可选参数数组  。例如，  onReleaseParams:["drag ended", 5] 适合这段代码：onRelease:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onClickParams：Array - 用于提供onClick 回调的可选参数数组  。例如，onClickParams:["clicked", 5] 适合这段代码： onClick:function(message, num) { console.log("message: " + message + ", num: " + num); }<br />
+onPressScope：Object - 定义onPress 函数的范围（该  函数"this" 内部是什么  ）。<br />
+onDragStartScope：Object - 定义onDragStart 函数的范围（该  函数"this" 内部是什么  ）。<br />
+onDragScope：Object - 定义onDrag 函数的范围（该  函数"this" 内部是什么  ）。<br />
+onDragEndScope：Object - 定义onDragEnd 函数的范围（该  函数"this" 内部是什么  ）。<br />
+onReleaseScope：Object - 定义onRelease 函数的范围（该  函数"this" 内部指的是什么  ）。<br />
+onClickScope：Object - 定义onClick 函数的范围（该  函数"this" 内部是什么  ）。<br />
+onLockAxis：函数 - 一旦运动被锁定到水平轴或垂直轴上，就应该调用的函数。这种情况发生时lockAxis是true和用户拖动够可拖动，以确定哪个轴锁定。它也发生在触摸使能设备时，你有一个可拖动其type仅允许其沿着一个轴拖动（如type:"x"，type:"y"，type:"left"，或type:"top"），并且用户触摸拖动和可拖动的确定方向，无论是天然的允许触摸滚动或Draggable-诱导拖曳。在函数内部，  "this" 指的是  Draggable 实例，使得访问锁定轴（this.lockedAxis它将是"x"或"y"）或目标元素（this.target）等容易。默认情况下， pointerEventpageXpageYtargetcurrentTarget<br />
+		</div>
+	</div>
+
+</body>
+
+</html>

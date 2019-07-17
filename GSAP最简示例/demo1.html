@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			[class^='logo']{width: 80px;height: auto;}
+		</style>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" class='logo1'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo2'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo3'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo4'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo5'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo6'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo7'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo8'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo9'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo10'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo11'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo12'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo13'/><br />
+		<img src="../img/logo-onboard-video.svg" class='logo14'/><br />
+		
+	</body>
+		<!--CustomEase扩展，支持create()的使用，见.logo14-->
+	<script src="../js/commonjs-flat/CustomEase.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		TweenMax.to('.logo1', 2, {x: '400px',ease: Power0.easeNone},'-=10');
+		TweenMax.to('.logo2', 2, {x: '400px',ease: Power1.easeOut});
+		TweenMax.to('.logo3', 2, {x: '400px',ease: Power2.easeOut});
+		TweenMax.to('.logo4', 2, {x: '400px',ease: Power3.easeOut});
+		TweenMax.to('.logo5', 2, {x: '400px',ease: Power4.easeOut});
+		TweenMax.to('.logo6', 2, {x: '400px',ease: Back.easeOut.config(4)});//config()控制向后位移的程度
+		TweenMax.to('.logo7', 2, {x: '400px',ease: Elastic.easeOut.config(1, 0.3)});
+		TweenMax.to('.logo8', 2, {x: '400px',ease: RoughEase.ease});//.config({template: Power0.easeNone,strength: 1,points: 20,taper: "none", randomize: false,clamp: false})
+		TweenMax.to('.logo9', 2, {x: '400px',ease: SlowMo.ease.config(0.7, 0.7, false)});
+		TweenMax.to('.logo10', 2, {x: '400px',ease: SteppedEase.config(20)});
+		TweenMax.to('.logo11', 2, {x: '400px',ease: Circ.easeOut});
+		TweenMax.to('.logo12', 2, {x: '400px',ease: Expo.easeOut});
+		TweenMax.to('.logo13', 2, {x: '400px',ease: Sine.easeOut});
+		//也可以通过SVG路径绘制一条时间曲线
+		CustomEase.create("hop", "M0,0 C0.126,0.382 0.372,0.759 0.476,0.55 0.738,0.022 0.818,1 1,1");
+		TweenMax.to(".logo14", 2, { ease: "hop", x:'400px'});
+		
+	</script>
+</html>

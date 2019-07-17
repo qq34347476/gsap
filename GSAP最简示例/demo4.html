@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			div{width: 100px;height: 100px;margin: 10px;}
+		</style>
+	</head>
+	<body>
+		<div class="a" style="background: red;"></div>
+		<div class="b" style="background: yellow;"></div>
+		<div class="c" style="background: coral;"></div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				TweenMax.to($('div'),2,{width:200})//通过jquery的方式选择元素
+				//GSAP JS 根本不依赖于jQuery，但它们在一起很好。例如，您可以使用jQuery作为选择器，
+				//并将jQuery对象提供给GSAP用于动画。不要担心 - GSAP足够聪明，可以识别jQuery对象，
+				//并抓住他们的DOM元素内容直接动画化，而不是尝试改变jQuery对象本身。
+			})
+		</script>
+	</body>
+</html>

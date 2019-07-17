@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			.text{font-size: 50px;color: #333;position: relative;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var $text = $('.text'),//选择要进行切割的文本
+				splitText = new SplitText($text),//建立切割对象，需要传入目标
+				tl = new TimelineLite()//建立时间轴
+				tl.set($text,{perspective:400})
+				
+				function kill(){//消除timeline中其它动画的影响,revert(恢复)
+					tl.clear().time(0)//重置时间轴
+					splitText.revert()//恢复原始内容（拆分前的innerHTML）
+				}
+				
+				$(document).ready(function(){
+					kill()
+					splitText.split({type:'chars,words,lines'})//预定义切割方式
+					tl.staggerFrom(splitText.chars,1,{scale:4,autoAlpha:0,rotationX:-180,ease:Back.easeOut},0.02)
+//		each()的方式遍历所有字符，然后分别设置动画
+//					$(splitText.chars).each(function(index,el){
+//						tl.from($(el),1,{y:100},index*0.02)
+//					})
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<div class="text">
+SplitText is an easy to use JavaScript utility that allows you to split HTML text into characters
+		</div>
+	</body>
+</html>

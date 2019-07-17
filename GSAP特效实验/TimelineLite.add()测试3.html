@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				tl.to('img',1,{x:100})
+				  .to('img',1,{y:100})
+				  .add('startAt',3)//第13行的动画将在整个时间轴运行至第3秒时执行，可将3替换为'+=1'效果一样
+				  .to('img',1,{x:200},'startAt')
+				  .call(myFunction)//在时间轴末尾调用一个函数
+				function myFunction(){
+					alert('动画结束')
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="position: relative;width: 100px;"/>
+	</body>
+</html>

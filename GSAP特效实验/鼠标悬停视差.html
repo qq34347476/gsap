@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+					var $container = $('.container')
+					,$img1 = $('.img1')
+					,$img2 = $('.img2')
+					,$img3 = $('.img3')
+				
+					TweenMax.set($container,{height:$('.img1').outerHeight()})
+					TweenMax.set('.container img',{transformStyle: 'preserve-3d', transformPerspective:500, transformOrigin:'center center'})
+				
+				$(window).resize(function(){
+
+					TweenMax.set($container,{height:$('.img1').outerHeight()})
+				})
+				
+				$container.mousemove(function(e){
+					var sxPos = e.pageX / $container.width() * 100 - 50
+					,syPos = e.pageY / $container.height() * 100 - 50
+					console.log(syPos);
+					TweenMax.to($img1,1,{y:-0.1* syPos,x:-0.1 * sxPos})
+					TweenMax.to($img2,1,{y:0.2* syPos,x:0.6 * sxPos})
+					TweenMax.to($img3,1,{y:0.2* syPos,x:0.6 * sxPos})
+					
+
+
+				})
+			})
+		</script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			.container{width: 120%;overflow: hidden;position: relative;background: coral;}
+			.container img{display: block;position: absolute !important;}
+			
+			.img1{z-index: 6;width: 100%;margin: auto;left: -30px;top: -10px;}
+			.img2{z-index: 8;width: 60%;left: -230px;bottom: -155px;}
+			.img3{z-index: 10;width: 60%;right: 0px;bottom: 100px;}
+
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<img src="../img/S6WCriT.jpg" class="img1"/>
+			<img src="../img/aeffA4C.png" class="img2"/>
+			<img src="../img/QAyjA6B.png" class="img3"/>
+		</div>
+	</body>
+</html>

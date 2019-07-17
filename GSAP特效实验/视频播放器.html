@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			@font-face {
+				font-family: 'iconfont';
+				/* project id 317878 */
+				src: url('//at.alicdn.com/t/font_a0c6r8zbbsqhncdi.eot');
+				src: url('//at.alicdn.com/t/font_a0c6r8zbbsqhncdi.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_a0c6r8zbbsqhncdi.woff') format('woff'), url('//at.alicdn.com/t/font_a0c6r8zbbsqhncdi.ttf') format('truetype'), url('//at.alicdn.com/t/font_a0c6r8zbbsqhncdi.svg#iconfont') format('svg');
+			}
+			
+			.videoBox {
+				width: 640px;
+				height: 360px;
+				background: coral;
+				font-family: iconfont;
+				position: relative;
+			}
+			
+			#myVideo {
+				width: 100%;
+			}
+			
+			.control_group {
+				width: 100%;
+				height: 40px;
+				box-sizing: border-box;
+				/*padding: 0 10px;*/
+				position: absolute;
+				bottom: 0;
+				background: whitesmoke;
+			}
+			
+			.control_group div {
+				float: left;
+				line-height: 42px;
+				cursor: pointer;
+			}
+			
+			.left_group {
+				position: absolute;
+				left: 20px;
+			}
+			
+			.right_group {
+				position: absolute;
+				right: 20px;
+			}
+			
+			#next {
+				margin-left: 30px;
+				margin-top: 0px;
+			}
+			
+			#sounds {
+				margin-left: 20px;
+				margin-top: -1px;
+			}
+			
+			.progressBox {
+				margin-left: 50px;
+			}
+			
+			#setting {
+				margin-right: 20px;
+				margin-top: -1px;
+			}
+			
+			#theater_mode {
+				margin-right: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="videoBox">
+			<video id="myVideo" autoplay>
+
+				<source src="../img/city-4096-mp4-30fps-x264-ffmpeg.mp4">
+
+			</video>
+			<div class="control_group">
+				<div class="left_group">
+					<div id="play">
+						&#xe651;
+					</div>
+					<div id="next">
+						&#xe601;
+					</div>
+					<div id="sounds">
+						&#xe622;
+					</div>
+					<div class="progressBox">
+						<span id="currentTime">0:00</span>/
+						<span id="totalTime">0:00</span>
+					</div>
+				</div>
+				<div class="right_group">
+					<div id="setting">
+						&#xe6bd;
+					</div>
+					<div id="theater_mode">
+						&#xe60f;
+					</div>
+					<div id="full">
+						&#xe614;
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script type="text/javascript">
+		var thisVideo = document.getElementById('myVideo')
+		var thisPlay = document.getElementById('play')
+		var currentTime = document.getElementById("currentTime")
+		var totalTime = document.getElementById("totalTime")
+		var setting = document.getElementById("setting")
+		var theater_mode = document.getElementById("theater_mode")
+		var full = document.getElementById("full")
+		var nowTime,totalTime
+			//当视频自动播放时
+		if(thisVideo.autoplay) {
+			console.log("start");
+			playVid()
+			console.log(thisVideo);
+
+		}
+
+		function eventTester(e) {
+			thisVideo.addEventListener(e, function() {
+				console.log((new Date()).getTime(), e);
+			})
+		}
+		//		eventTester("timeupdate");
+
+		thisVideo.addEventListener('loadedmetadata', function() {
+			totalTime = thisVideo.duration.toFixed(2)
+			totalTime.innerHTML =totalTime
+		})
+
+		thisVideo.addEventListener('timeupdate', function() {
+			nowTime = thisVideo.currentTime.toFixed(2)
+			currentTime.innerHTML = nowTime
+			console.log(thisVideo.currentTime);
+		})
+
+		full.addEventListener('click', function() {
+			var requestMethod = thisVideo.requestFullScreen || //W3C
+				thisVideo.webkitRequestFullScreen || //Chrome等
+				thisVideo.mozRequestFullScreen || //FireFox
+				thisVideo.msRequestFullScreen; //IE11
+			if(requestMethod) {
+				requestMethod.call(thisVideo);
+			} else if(typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
+				var wscript = new ActiveXObject("WScript.Shell");
+				if(wscript !== null) {
+					wscript.SendKeys("{F11}");
+				}
+			}
+		})
+
+		function playVid() {
+			thisVideo.play();
+			thisPlay.innerHTML = '&#xe60a;'
+			thisPlay.removeEventListener('click', playVid, false)
+
+			thisPlay.addEventListener('click', pauseVid, false)
+
+		}
+
+		function pauseVid() {
+			thisVideo.pause();
+			thisPlay.innerHTML = '&#xe651;'
+			thisPlay.removeEventListener('click', pauseVid, false)
+
+			thisPlay.addEventListener('click', playVid, false)
+
+		}
+		
+//		console.log(MillisecondToDate(1000000));
+
+		function MillisecondToDate(msd) {
+			var time = parseFloat(msd) / 1000;
+			if(null != time && "" != time) {
+				if(time > 60 && time < 60 * 60) {
+					time = parseInt(time / 60.0) + "分钟" + parseInt((parseFloat(time / 60.0) -
+						parseInt(time / 60.0)) * 60) + "秒";
+				} else if(time >= 60 * 60 && time < 60 * 60 * 24) {
+					time = parseInt(time / 3600.0) + "小时" + parseInt((parseFloat(time / 3600.0) -
+							parseInt(time / 3600.0)) * 60) + "分钟" +
+						parseInt((parseFloat((parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60) -
+							parseInt((parseFloat(time / 3600.0) - parseInt(time / 3600.0)) * 60)) * 60) + "秒";
+				} else {
+					time = parseInt(time) + "秒";
+				}
+			} else {
+				time = "0 时 0 分0 秒";
+			}
+			return time;
+
+		}
+	</script>
+
+</html>

@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			div{width: 0;height: 30px;position: relative;margin: 10px;white-space:nowrap;font-size: 12px;color: #333333;}
+			span{position: absolute;right: -20px;}
+			.box1{background: coral;}
+			.box2{background: greenyellow;}
+			.box3{background: blueviolet;}
+			.box4{background: darkorange;}
+			
+		</style>
+	</head>
+	<body>
+	<img src="../img/logo.png" style="position: relative;"/>
+	<div class="box1"></div>
+	<div class="box2"></div>
+	<div class="box3"></div>
+	<div class="box4"></div>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var tl = TweenMax.to('img',1,{x:100,repeat:2,onUpdate:put})
+			function put(){
+				var tp = tl.totalProgress()
+				var tt = tl.totalTime()
+				var p = tl.progress()
+				var t = tl.time()
+				console.log('总进程:'+tp+' 总时间:'+tt+' 进程:'+p+' 时间:'+t);
+				TweenMax.to('.box1',0,{width:tp*100})
+				TweenMax.to('.box2',0,{width:tt*100})
+				TweenMax.to('.box3',0,{width:p*100})
+				TweenMax.to('.box4',0,{width:t*100})
+				$('.box1').text('总进程:'+Math.floor(tp*100)+'%')
+				$('.box2').text('总时间:'+tt.toFixed(2)+'s')
+				$('.box3').text('进程:'+Math.floor(p*100)+'%')
+				$('.box4').text('时间:'+t.toFixed(2)+'s')
+				
+			}
+		})
+	</script>
+	</body>
+</html>

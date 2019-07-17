@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/Draggable.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/ThrowPropsPlugin.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				,windowHeight = $(window).outerHeight()
+				,scrollTop = 0
+				,$container = $('.container')
+				console.log(windowHeight);
+				
+				$(window).scroll(function(){
+					scrollTop = $(this).scrollTop()
+					console.log(scrollTop);	
+				})
+				
+				
+				tl.set("[class^='page']",{height:windowHeight})
+				.set($container,{height:windowHeight*9})
+				.set('.scrollBox',{height:windowHeight*5,width:'100%'})
+				
+				.to($container,1,{y:'-'+windowHeight*4-scrollTop})
+				
+				Draggable.create('.scrollBox',{type:'y',trigger:"[class^='page']",throwProps:true,bounds:$container,snap:function(endValue){
+					return Math.round( endValue / windowHeight) * windowHeight
+				}})
+				var position = 0
+				function GO(e){
+				 	var SD=isNaN(e)?e.wheelDelta||-e.detail:e;
+					if(SD>0){//当滚轮向下滚动时
+					position+=windowHeight	
+					if(position==windowHeight*5){
+						position=windowHeight*4
+					}
+					TweenMax.to('.scrollBox', 0.8, {y:position,ease:Back.easeOut});//上一页
+					
+					}else{
+					position-=windowHeight	
+					if(position==-windowHeight){
+						position=0
+					}
+						TweenMax.to('.scrollBox', 0.8, {y:position,ease:Back.easeOut});//下一页
+						
+					}
+//					else{
+//						TweenMax.to('.scrollBox', 1, {throwProps:{y:{end:position}}, ease:Strong.easeOut});
+//						position -= windowHeight
+//					}
+				};
+
+				document.addEventListener("mousewheel",GO);
+				document.addEventListener("DOMMouseScroll",GO);
+			})
+		</script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			body{overflow: hidden;}
+			[class^='page']{width: 100%;height: 800px;text-align: center;;font-size: 100px;line-height: 800px;color: ghostwhite;}
+			.page1{background: #29363B;}
+			.page2{background: #EA495F;}
+			.page3{background: #F4837D;}
+			.page4{background: #FDCEA9;}
+			.page5{background: #99B998;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="scrollBox">
+				<div class="page1">1</div>
+				<div class="page2">2</div>
+				<div class="page3">3</div>
+				<div class="page4">4</div>
+				<div class="page5">5</div>
+			</div>
+		</div>
+	</body>
+</html>

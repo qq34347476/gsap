@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var x, y
+				getPosition();
+				
+				fly()
+				
+				function fly(){
+					TweenMax.to('img',1,{x:x,y:y,onComplete:keepFly, ease: Linear.easeNone})
+				}
+				
+				function getPosition(){
+					x = Math.random() * 50
+					y = Math.random() * 50
+				}
+				
+				function keepFly(){
+					getPosition()
+					fly()
+				}
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="position: relative;width:100px;margin: auto;display: block;margin-top: 200px;"/>
+	</body>
+</html>

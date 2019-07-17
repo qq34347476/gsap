@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Swing Drop Flicker</title>
+  <script src="parallax.js" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" href="styles/styles.css"/>
+  
+  <style type="text/css">
+  	body{
+  font-family: Arial, Helvetica, sans-serif;
+  color:black;
+  background:black;
+  border-top:solid 4px #91e600;
+  margin:0;
+  color:white;
+  padding:100px 50px;
+  font-size:80px;
+  text-align:center;
+ 
+}
+
+
+#compatibility {
+   visibility:hidden;
+}
+  </style>
+</head>
+
+<body>
+<div id="scene">
+  <div id="compatibility" class="layer" data-depth="1">Swing Drop Flicker</div>
+	
+</div>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var tl = new TimelineMax({repeat:10}),
+  text = $("#compatibility"),
+  split = new SplitText(text, {type:"chars", position:"absolute"}),
+  rough = RoughEase.ease.config({strength:2, clamp:true}),
+  i;
+
+tl.set(text, {autoAlpha:1})
+
+
+ 
+for (i = 0; i < split.chars.length; i++) {
+//tl.fromTo(split.chars[i], 2.4, {transformOrigin:"center -160px", z:0.1, rotation:((Math.random() < 0.5) ? 90 : -90)}, {rotation:0, ease:Elastic.easeOut}, 0.3 + i * 0.06);
+//tl.to(split.chars[i], 0.6, {y:96,  ease:Bounce.easeOut}, 3.4 + Math.random() * 0.6);
+  tl.to(split.chars[i], 0.6, {autoAlpha:0, ease:rough}, 1.5 + Math.random());
+}
+</script>
+<script>
+
+	// Pretty simple huh?
+	var scene = document.getElementById('scene');
+	var parallax = new Parallax(scene);
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="width: 100px;position: absolute;" class="man"/>
+		<button class="btn">重新开始</button>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var animate = TweenMax.to('.man',1,{left:200})				
+				$('.btn').click(function(){
+				animate.restart()
+				})
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				  tl.set('img',{x:0,y:0})
+				  for (var i = 1; i <= 3; i++) {
+				  	var whichImg = '.img'+i
+				  	tl.to(whichImg,0.5,{y:100,delay: -i * 0.5})
+				    .to(whichImg,0.5,{x:100})
+				    .to(whichImg,0.5,{y:200})
+				  }
+				  
+				  $(document).click(function(){
+				  	tl.seek(2)
+				  })
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/onboard-happy.jpg" style="position: absolute;width: 100px;" class="img1"/>
+		<img src="../img/onboard-arctic.jpg" style="position: absolute;width: 100px;" class="img2"/>
+		<img src="../img/onboard-100-moments.jpg" style="position: absolute;width: 100px;" class="img3"/>
+	</body>
+</html>

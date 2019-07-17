@@ -1,0 +1,129 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 14px;
+}
+
+$heroHeight: 100vh;
+// Try another height here if you don't want full screen
+
+.heroEffects {
+    height: $heroHeight;
+    position: relative;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    .bg {
+        height: $heroHeight;
+        position: fixed;
+        width: 100%;
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/30256/jungleBG.jpg');
+        background-repeat: no-repeat;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        background-position: center center;
+        transform: scale(1); //need this(to set the start) for some cross-browser issues
+    }
+    .shade {
+        opacity: 0;
+        background: rgba(0, 0, 0, .8);
+        z-index: 3;
+        height: $heroHeight;
+        position: fixed;
+        width: 100%;
+    }
+    .title {
+        width: 100%;
+        .text {
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+            color: White;
+            padding: 2em;
+            background: rgba(0, 0, 0, .5);
+        }
+    }
+    .arrow {
+        position: fixed;
+        left: 50%;
+        margin-left: -20px;
+        bottom: 0;
+        width: 40px;
+        height: 40px;
+        opacity: 1;
+    }
+}
+
+.centerV {
+    display: table;
+    height: 100%;
+    > div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+    // If needed, some other centering options: 
+    // https://codepen.io/EricPorter/pen/bZvmRg
+}
+
+h1 {
+    font-size: 5em;
+    margin-bottom: 0.1em;
+    font: 5em/1em;
+    color: #fff;
+}
+
+p {
+    width: 60vw;
+    margin: 0 auto;
+    line-height: 1.5em;
+    padding: 10px 20px 0;
+    border-top: solid 1px rgba(255, 255, 255, .2);
+    letter-spacing: 0.015em;
+    display: block;
+    color: #eee;
+}
+
+.content {
+    background: #cdcdcd;
+    padding: 150px 50px;
+    p {
+        color: #111;
+        font-size: 2em;
+        margin-bottom: 50px;
+    }
+}
+
+.bouncy {
+    animation: Weeeeeeeeeee 3s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes Weeeeeeeeeee {
+    0% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(.19, .28, .27, 1);
+    }
+    11% {
+        transform: translate(0, -85px) scaleX(.8);
+        animation-timing-function: cubic-bezier(.57, .01, .84, .5);
+    }
+    20% {
+        transform: translate(0, 0px) scaleY(.8);
+        animation-timing-function: cubic-bezier(.19, .28, .27, 1);
+    }
+    28% {
+        transform: translate(0, -10px);
+        animation-timing-function: cubic-bezier(.57, .01, .84, .5);
+    }
+    36% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(.19, .28, .27, 1);
+    }
+    100% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(.19, .28, .27, 1);
+    }
+}

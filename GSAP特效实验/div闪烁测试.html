@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Swing Drop Flicker</title>
+  <style type="text/css">
+.container div{width: 100px;height: 100px;background: black;float: left;}
+
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+</div>
+<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+//var tl = new TimelineMax(),
+//rough = RoughEase.ease.config({strength:2, clamp:true}),
+//i;
+//
+//function creat(){
+//	for (var i = 0; i<30; i++) {
+//	var dot = $('.container').append('<div class="rect'+i+'"></div>')
+//	}
+//}
+//
+//function run(){
+//	for (var i = 0; i < 30; i++) {
+//		tl.to('.rect'+i,0.6,{ease:rough,autoAlpha:0}, 1.5 + Math.random())
+//	}
+//}
+//
+//creat()
+//run()
+
+//var tl = new TimelineMax(),
+//rough = RoughEase.ease.config({strength:2, clamp:true}),
+//i;
+//
+//function creat(){
+//	alert(1)
+//	for (var i = 0; i<30; i++) {
+//	var dot = $('.container').append('<div class="rect'+i+'"></div>')
+//	}
+//}
+//
+//function run(){
+//	alert(2)
+//	for (var i = 0; i < 30; i++) {
+//		console.log('.rect'+i);
+//		tl.to('.rect'+i,0.6,{ease:rough,autoAlpha:0}, 1.5 + Math.random())//动画时间轴总长为0，所以1.5 + Math.random()调用时间轴的关键帧是无效的，因为1.5s及以后为空
+//	}
+//}
+//
+//tl.call(creat).call(run)
+
+var tl = new TimelineMax(),
+rough = RoughEase.ease.config({strength:2, clamp:true}),
+i;
+
+function creat(){
+	for (var i = 0; i<30; i++) {
+	var dot = $('.container').append('<div class="rect'+i+'"></div>')
+	}
+}
+
+function run(){
+	var tl = new TimelineMax()//分配了子时间轴
+	for (var i = 0; i < 30; i++) {
+		tl.to('.rect'+i,0.6,{ease:rough,autoAlpha:0}, 1.5 + Math.random())
+	}
+	return tl//然后将生成后的子时间轴返回给用call调用它的母时间轴
+}
+
+
+
+tl.call(creat).call(run)
+</script>
+</body>
+</html>

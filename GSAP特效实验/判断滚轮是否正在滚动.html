@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<style type="text/css">
+			#panel>div {
+				height: 800px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="panel">
+			<div id="div1"></div>
+			<div id="div2"></div>
+			<!--			<a name="div3Anchor"> </a>-->
+			<div id="div3"></div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//默认，播放时可以自动定位播放语句
+				window.canAutoScroll = true;
+				//只要滚动事件发生，就停止自动滚动定位方法的执行
+				var timeout = null;
+				var panel = $("#panel");
+				$(window).scroll(function() {
+					console.log('scroll');
+					if(timeout != null) {
+						window.clearTimeout(timeout);
+					}
+					window.canAutoScroll = false;
+					//500ms后，假定认为停止滚动
+					timeout = window.setTimeout(function() {
+						console.log("2");
+						window.canAutoScroll = true;
+					}, 500);
+				});
+
+				//播放事件
+				var playEvent = function(time) {
+					console.log("1");
+					//滚动到指定语句
+					var autoScroll = function() {
+						var panel = $("#panel");
+						var div3 = document.getElementById("div3");
+						panel.animate({
+							scrollTop: div3.offsetTop - panel.height() / 2
+						}, 200);
+					}
+					if(window.canAutoScroll) {
+						autoScroll();
+					}
+				}
+				document.addEventListener('click', playEvent)
+			})
+		</script>
+	</body>
+
+</html>

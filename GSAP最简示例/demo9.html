@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>GreenSock: TimelineLite Syntax</title>
+ 
+<style>
+body{
+    background-color:#000;
+}
+#demo {
+    width: 692px;
+    height: 70px;
+    background-color: #333;
+    padding: 8px;
+}
+#demoBackground{
+    position:absolute;
+    background-color:#000;
+    overflow:hidden;
+    width:792px;
+    height:70px;
+    visibility:hidden;
+}    
+
+#timelinelite{
+    position:absolute;
+    background: url(../img/timelinelite.png) no-repeat;
+    left:60px;
+    top:16px;
+    width: 180px;
+    height: 33px;
+    overflow:hidden;
+}    
+#tagline{
+    position:absolute;    
+    left:236px;
+    top:24px;
+    width:356px;
+    height:26px;
+}        
+#tagline span{
+    position:relative;
+    display:inline-block;
+}
+</style>
+</head>
+ 
+<body>
+<div id="demo">
+    <div id="demoBackground">
+        <div id="logo"><img src="../img/logo-onboard-video.svg" style="position:absolute;height: 60px;width: 60px;top:6px;"/></div>
+        <div id="timelinelite"></div>
+        <div id="tagline">
+        	<span>
+        		<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/timelineDemo/whos_61x26.png" width="61" height="26">
+        </span>
+        <span>
+        	<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/the_35x26.png" width="35" height="26"></span>
+        	<span>
+        		<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/timelineDemo/boss_51x26.png" width="51" height="26">
+        	</span>
+        	<span>
+        		<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/timelineDemo/of_27x26.png" width="27" height="26">
+        	</span>
+        	<span>
+        		<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/timelineDemo/your_49x26.png" width="49" height="26">
+        	</span>
+        	<span>
+        		<img src="https://greensock.com/wp-content/uploads/custom/jump-start/img/timelineDemo/tweens_83x26.png" width="83" height="26">
+        	</span>
+        </div>
+    </div>
+</div>
+<input type="button" id="restartBtn" value="restart()">
+ 
+<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+ 
+<script>
+$(window).load(function() {
+    var logo = $("#logo"),
+        timelineLite = $("#timelinelite"),
+        tagline = $("#tagline span"),
+        restartBtn = $("#restartBtn"),
+        tl = new TimelineLite();
+             
+        tl.from(logo, 0.5, {left:"-=60px", ease:Back.easeOut})
+          .from(timelinelite, 0.5, {width:"0px", alpha:0}, "-=0.02")
+          .staggerFrom(tagline, 0.5, {top:"-=30px", rotation:"-40deg", alpha:0, scale:1.8, ease:Back.easeOut}, 0.2);
+         
+    restartBtn.click(function() {
+        tl.restart();
+    });
+     
+    //show the demoBackground div after DOM is ready and all images loaded
+    TweenLite.set($("#demoBackground"), {css:{visibility:"visible"}});
+});
+ 
+</script>
+ 
+</body>
+</html>

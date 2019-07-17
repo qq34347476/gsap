@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+  		<link rel='stylesheet prefetch' href='../css/jqueryUI.css'>
+		
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite({onUpdate:updateSlider})
+				tl.set('.viewBox', {css:{transformPerspective:150, transformStyle:"preserve-3d"}}); //saves a dozen lines of vendor-prefixed css ;)
+				
+				var dur = 1
+				var timeOffset = []
+				var boxNum
+ 
+				
+				for (var i = 1; i <= 7; i++) {
+			   		$('.viewBox').append('<div class="img'+i+' box">'+i+'</div>')
+				}
+				boxNum = $('.box').size()
+				tl.set('.viewBox *',{x:550,y:50,opacity:0})
+				  
+				//生成按钮
+				for (var i = 1; i <= Math.ceil(boxNum / 3); i++) {
+					console.log(boxNum / 3);
+					$('.viewBox').append('<div class="btn'+i+' btn"></div>')
+				}
+				
+				function timeLineSet(t,i){
+					var whichImg = '.img' + i
+				  	console.log(t+'  '+i+'  '+whichImg+'  '+boxNum)
+					console.log(timeOffset);
+
+			  			tl.to(whichImg,dur,{x:300,opacity:1},timeOffset[0])
+			  			  .to(whichImg,3,{x:270},timeOffset[1])
+						  .to(whichImg,dur,{y:180},timeOffset[2])
+			  			  .to(whichImg,3,{x:230},timeOffset[3])
+						  
+						  .to(whichImg,dur,{x:60},timeOffset[4])
+			  			  .to(whichImg,3,{x:30},timeOffset[5])
+						  
+						  .to(whichImg,dur,{x:-160,opacity:1},timeOffset[6])
+						  .set(whichImg,{x:550,y:50,opacity:0})
+				  }
+				  
+				  for (var i = 1; i <= boxNum; i++) {//遍历每个box
+					
+				  	if(i == 1){//第一张图片
+				  			timeLineSet(timeOffset = [],i)//不提供任何偏移
+				  	}else{//其它图片
+
+							timeOffset=['-=9','-=8','-=5','-=4','-=1','-=0','-=0','-=0','-=0','-=0'] 
+				  			timeLineSet(timeOffset,i)
+				  	}
+				  }
+				  function keepRun(){
+				  	tl.restart()
+				  }
+				  
+				  tl.call(keepRun)
+				  
+				$('.btn').click(function(){
+					
+				})
+				
+				// --- jQueryUI Controls --- //
+				$( "#slider" ).slider({
+			            range: false,
+			            min: 0,
+			            max: 100,
+						step:.1,
+			            slide: function ( event, ui ) {
+			                tl.progress( ui.value/100 ).pause();
+			            }
+			     });	
+						
+				function updateSlider() {
+					$("#slider").slider("value", tl.progress() * 100);
+				} 				  
+			})
+		</script>
+		<style type="text/css">
+			.viewBox{width: 500px;height: 300px;position: relative;background: coral;margin: auto;margin-top: 160px;}
+			.box{position: absolute;color: white;;font-size:50px;text-align: center;line-height: 100px;width: 140px;height: 100px;background: gray;}
+			#slider{
+			  position:relative;  
+			  width:700px;
+			  top: 50px;
+			  margin: auto;
+			}
+			.btn{width: 10px;height: 10px;background: red;float: left;margin: 10px;border: 1px solid white;cursor: pointer;}
+			.ui-slider .ui-slider-handle { 
+			  width: 40px !important; 
+			  margin-left: -20px !important; 
+			  height:30px !important; 
+			  margin-top:-3px !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="viewBox">
+			
+		</div>
+		<div id="slider"></div>
+
+	</body>
+</html>

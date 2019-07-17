@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()//目标时间轴
+				var duration
+				for (var i = 0; i < 3; i++) {//用循环在目标时间轴中添加子时间轴
+					tl.add(addFunc(i+1))
+				}
+				function addFunc(i){
+				var tl = new TimelineLite()
+					tl.to('.img'+i,1,{x:'+=100'})
+					.to('.img'+i,1,{y:'+=100',onComplete:keep})//当一个子时间轴的动画完成时调用keep函数保证总时间轴完整的执行
+					duration = tl.duration()
+					return tl//返回子时间轴给add()
+				}
+
+				
+				var time = duration//每个子动画持续时长
+				totalTime = tl.totalDuration()//总时间轴的时间总长
+				
+				function keep(){					
+					if(time == totalTime){//满足则tl完成一回合，此时动画结束，我们需要重启动画
+						time = duration//重置第一个动画的时长
+						tl.restart()
+					}else{
+						tl.seek(time)
+						time += duration
+					}	
+				}
+				
+				$(document).click(function(){
+					tl.seek(2)//通过seek函数可以直接跳转到指定的时间
+//					tl.progress(0.5)//通过此方式可以访问进程的节点
+				})
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/onboard-happy.jpg" style="position: relative;width: 100px;" class="img1"/>
+		<img src="../img/onboard-arctic.jpg" style="position: relative;width: 100px;" class="img2"/>
+		<img src="../img/onboard-100-moments.jpg" style="position: relative;width: 100px;" class="img3"/>
+	</body>
+</html>

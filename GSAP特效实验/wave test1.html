@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../GSAP已破解脚本/SplitText.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{padding: 0;margin: 0;}
+			html, body {
+			  height: 100%;
+			}
+			body {
+			  background: -webkit-radial-gradient(center ellipse, #fffeea 0%, #fffeea 35%, #fed095 100%);
+			  background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #fed095 100%);
+			  overflow: hidden;
+			}
+			
+			.text{width: 60%;font-size: 110%;text-align: center;color: #79572B;margin: auto;margin-top:200px;}
+
+			[class^='wave']{
+				width: 6400px;height: 198px;background: url(../img/wave.svg) repeat-x;position: absolute;bottom: 0;left: 0;
+			}
+			.wave1{opacity: 0.4;}
+			.wave2{opacity: 0.7;}
+			.wave3{opacity: 1;}
+			
+			.partners{width: 100%;height: 200px;margin: auto;background: red;}
+			ul{width: 600px;height: 200px;display: block;overflow: hidden;list-style: none;background: coral;margin: auto;}
+			.p1{width: 1000px;height: 100px;display: block;}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var tl = new TimelineLite()
+				TweenMax.to('.wave1',2,{x:-1600,repeat:-1,ease:Linear.easeNone})
+				TweenMax.to('.wave1',2,{y:Math.random() * 100,repeat:-1,ease:Linear.easeNone,yoyo:true})
+				
+				TweenMax.to('.wave2',2,{x:-1600,repeat:-1,ease:Linear.easeNone})
+				TweenMax.to('.wave2',2,{y:Math.random() * 200,repeat:-1,ease:Linear.easeNone,yoyo:true})
+				TweenMax.to('.wave2',2,{left:-400,repeat:-1,yoyo:true,ease:Linear.easeNone})
+				
+				TweenMax.to('.wave3',2,{x:-1600,repeat:-1,ease:Linear.easeNone})
+				TweenMax.to('.wave3',2,{y:Math.random() * 300,repeat:-1,ease:Linear.easeNone,yoyo:true})
+				TweenMax.to('.wave3',2,{left:-200,repeat:-1,yoyo:true,ease:Linear.easeNone})
+				
+				var $text = $('.text'),
+				splitText = new SplitText($text)
+				
+				tl.set($text,{perspective:400})
+				
+				function kill(){
+					tl.clear().time(0)
+					splitText.revert()
+				}
+				
+				kill()
+				splitText.split({type:'chars'})
+				tl.staggerFrom(splitText.chars,0.6,{scale:4,autoAlpha:0,rotationX:-180,ease:Back.easeOut},0.02)
+			})
+		</script>
+	</head>
+	<body>
+
+			<div class="text">Vticn is a great front end engineer team<br />we have the best technology and overcome the<br />difficulties of perseverance<br />for the potential benefits and partners<br />pain and happiness</div>
+			<div class="wave1"></div>
+			<div class="wave2"></div>
+			<div class="wave3"></div>
+			
+
+	</body>
+</html>

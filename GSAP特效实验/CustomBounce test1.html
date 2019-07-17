@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title></title>
+		<script src="../js/CustomBounce.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/CustomEase.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			body{background: rgb(242,216,211);}
+			svg {
+			  position:absolute;
+			  /*top: 50%;*/
+			  /*left: 50%;*/
+			  /*z-index: -1;*/
+			  /*overflow: visible;*/
+			  /*transform: translate(-50%,-50%);*/
+			  width: 100%;
+			  height: 100%;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				CustomBounce.create('myBounce',{strength:0.7,endAtStart:true,squash:2})
+				TweenMax.to('#ball',6,{ease:'myBounce',y:'-500'})//只是在位置上完成弹跳效果，但是图形的弹性拉伸效果没有体现
+				//我们需要以下方法来设置图形在位移上发生变化时，图形出现拉伸,用ease:'myBounce-squash'来实现拉伸目标状态(主要通过scaleX，scaleY实现)与拉伸过程状态的绑定
+				//通过transformOrigin:'bottom center'来设置拉伸相对于什么方向
+				TweenMax.to('#ball',6,{scaleX:1.5,scaleY:0.5,ease:'myBounce-squash',transformOrigin:'bottom center'})
+
+				document.getElementById('bounce').setAttribute('d',CustomEase.getSVGData('myBounce',{width:700,height:500}))
+				document.getElementById('squash').setAttribute('d',CustomEase.getSVGData('myBounce-squash',{width:700,height:500}))
+				console.log(CustomEase.getSVGData('myBounce-squash',{width:700,height:500}));//获取运动状态的数据并处理为SVG路径命令
+				
+			})
+		</script>
+	</head>
+	<body>
+		<svg width='100%' height='100%' viewBox="0 0 700 700">
+			<path id='bounce' stroke='#336633' stroke-width='4' fill='none'/>
+			<path id='squash' stroke='#88CE02' stroke-width='4' fill='none'/>
+			<circle fill='coral' r='75' cx='350' cy='625' id='ball'/>
+		</svg>
+	</body>
+</html>

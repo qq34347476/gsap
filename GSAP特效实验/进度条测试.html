@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script src="../js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/TweenMax.js" type="text/javascript" charset="utf-8"></script>
+  		<link rel='stylesheet prefetch' href='../css/jqueryUI.css'>
+		
+		<title></title>
+		<style type="text/css">
+			#slider{
+			  position:relative;  
+			  width:700px;
+			  top:20px;  
+			  left:100px;
+			}
+			
+			.ui-slider .ui-slider-handle { 
+			  width: 40px !important; 
+			  margin-left: -20px !important; 
+			  height:30px !important; 
+			  margin-top:-3px !important;
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				
+				var tl = new TimelineLite({onUpdate:updateSlider,paused:true})
+				tl.to('img',1,{x:200})
+				tl.to('img',1,{y:200})
+				tl.to('img',1,{x:400})
+				tl.to('img',1,{y:30})
+				// --- jQueryUI Controls --- //
+				$( "#slider" ).slider({
+			            range: false,
+			            min: 0,
+			            max: 100,
+						step:.1,
+			            slide: function ( event, ui ) {
+			                tl.progress( ui.value/100 ).pause();
+			            }
+			     });	
+						
+				function updateSlider() {
+					$("#slider").slider("value", tl.progress() * 100);
+				} 				  
+			})
+		</script>
+	</head>
+	<body>
+		<img src="../img/logo-onboard-video.svg" style="width: 100px;position: relative;"/>
+		<div id="slider"></div>
+		<button id="playPause">play</button>
+	</body>
+</html>
